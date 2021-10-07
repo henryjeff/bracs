@@ -1,14 +1,7 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { persistor, store } from "./store";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import Bracket from "./components/bracket/Bracket";
 import TopNavigation from "./components/navigation/TopNavigation";
 import BracketRoute from "./routes/MakeBracket";
 import MakeBracketRoute from "./routes/Bracket";
