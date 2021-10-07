@@ -1,79 +1,131 @@
-// export interface Bracket {
-//   [key: number]: Match;
-// }
+import { FlowElement, Elements } from "react-flow-renderer";
+import { Tree } from "./Tree";
+import colors from "../../constants/Colors";
 
-// interface Match {
-//   id: number;
-//   spotA: Team | undefined;
-//   spotB: Team | undefined;
-//   loser: Team | undefined;
-//   winner: Team | undefined;
-//   nextId: number | undefined;
-// }
-
-// interface Team {
-//   name: string;
-// }
-
-// export const convertListToBracket = (list: string[]) => {
-//   const teams: Team[] = convertListToTeams(list);
-//   let bracket: Bracket = {};
-//   let initialTeams = teams;
-//   let matchId = 1;
-//   while (initialTeams.length > 0) {
-//     let teamA = teams.shift();
-//     let teamB = teams.pop();
-
-//     let match: Match = {
-//       id: matchId,
-//       spotA: teamA,
-//       spotB: teamB,
-//       loser: undefined,
-//       winner: undefined,
-//       nextId: undefined,
-//     };
-//     bracket[matchId] = match;
-//     matchId += 1;
-//   }
-//   generateEmptyBracket(bracket, matchId);
-//   // console.log(bracket);
+// export const bracket: Bracket = {
+//   root: "0",
+//   matches: {
+//     "0": {
+//       id: "0",
+//       teamLeft: Team1,
+//     },
+//     "1": {
+//       id: "1",
+//       gameNext: "0",
+//       teamLeft: Team1,
+//       teamRight: Team2,
+//       winner: Team1,
+//       loser: Team2,
+//     },
+//     "2": {
+//       id: "2",
+//       gameNext: "0",
+//       teamLeft: Team3,
+//       teamRight: Team4,
+//     },
+//   },
 // };
 
-// const generateEmptyBracket = (bracket: Bracket, matchId: number) => {
-//   const seen: number[] = [];
-//   for (const id in bracket) {
-//     const matchA = bracket[id].id;
-//     const matchB = (bracket[Number(id) + 1] || { id: undefined }).id;
+export const convertTreeToElements = (tree: Tree<Team>) => {
+  const elements: Elements<any> = [];
+  // For each node in the tree, generate corresponding elements
+  tree.getNodes().forEach((node) => {
+    // Initial node data
+    const team = node.value;
+    const type = tree.getType(node.id!);
 
-//     if (seen.includes(matchA) || seen.includes(matchB)) continue;
-//     seen.push(matchA);
-//     seen.push(matchB);
+    // Create element
+    const element = {
+      id: node.id,
+      type: type,
+      position: tree.getPosition(node.id!),
+      ...(type === "team" ? { data: { team } } : {}),
+    };
+    const parent = node.parent;
 
-//     bracket[matchA].nextId = matchId;
-//     bracket[matchB].nextId = matchId;
+    if (parent) {
+      const edge = {
+        id: `${node.id}-${parent.id}`,
+        source: node.id,
+        target: parent.id,
+        type: "smoothstep",
+        animated: tree.getType(parent.id!) === "inProgress",
+        style: {
+          stroke:
+            node.value?.name === parent.value?.name && node.value?.color
+              ? node.value.color
+              : colors.navy1,
+          strokeWidth: 4,
+        },
+        isHidden:
+          tree.getType(parent.id!) === "team" &&
+          node.value?.name !== parent.value?.name,
+      };
+      elements.push(edge as FlowElement);
+    }
+    elements.push(element as FlowElement);
+  });
 
-//     let match: Match = {
-//       id: matchId,
-//       spotA: undefined,
-//       spotB: undefined,
-//       loser: undefined,
-//       winner: undefined,
-//       nextId: undefined,
-//     };
+  return elements;
+};
 
-//     bracket[matchId] = match;
-//     matchId += 1;
-//   }
+const generateRandomColor = () => {
+  return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+};
 
-//   console.log(bracket);
-// };
+export const convertListToElements = (teams: string[]): Elements<any> => {
+  // Total number of teams
+  const size = teams.length;
+  // Depth is the total depth of the tree
+  const depth = Math.ceil(Math.log2(size));
+  // _size is the total number of teams rounded to the nearest 2^n
+  const _size = 2 ** depth;
+  // _teams is a list of _size length filled with teams and empty spots are undefined
+  const _teams: (Team | undefined)[] = [];
+  for (let i = 0; i < _size; i++)
+    _teams[i] = teams[i]
+      ? {
+          name: teams[i],
+          color: generateRandomColor(),
+          elo: Math.round(Math.random() * 3000),
+        }
+      : undefined;
+  // Initialize the tree of teams
+  const tree: Tree<Team> = new Tree<Team>();
+  // Construct a tree with a depth of depth
+  tree.constructTree(depth);
+  // Generate a table of seed placements
+  const placements = generateSeedPlacement(depth);
+  // For each placement navigate to and replace value with a team
+  placements.forEach((directions, index) => {
+    tree.navigateAndReplace(_teams[index], directions);
+  });
+  // Play buy games
+  tree.playBuyGames();
 
-// const convertListToTeams = (list: string[]): Team[] => {
-//   return list.map((teamName) => {
-//     return {
-//       name: teamName,
-//     };
-//   });
-// };
+  const elements = convertTreeToElements(tree);
+  return elements;
+};
 
-export default {};
+const generateSeedPlacement = (depth: number) => {
+  const rows = 2 ** depth;
+  const table = [];
+  for (let i = 0; i < rows; i++) {
+    let row = [];
+    for (let j = depth - 1; j >= 0; j--) {
+      row.push(Math.floor((i / Math.round(2 ** j)) % 2));
+    }
+    row = row.reverse();
+    table.push(row);
+  }
+  for (let i = 0; i < rows / 2; i++) {
+    if (i % 2 === 0) continue;
+    const ai = i * 2;
+    const bi = i * 2 + 1;
+    const a: number[] = table[ai];
+    const b: number[] = table[bi];
+    table[bi] = a;
+    table[ai] = b;
+  }
+  return table;
+};

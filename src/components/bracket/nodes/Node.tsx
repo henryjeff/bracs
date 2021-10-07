@@ -1,62 +1,99 @@
 import { Handle, Position } from "react-flow-renderer";
+// import { Text } from "../../general";
 import colors from "../../../constants/Colors";
 
 export interface NodeProps {
   outlined?: boolean;
   colorStrip?: string;
+  seed?: number;
 }
 
-const Node: React.FC<NodeProps> = ({ outlined, colorStrip, children }) => {
+const Node: React.FC<NodeProps> = ({
+  outlined,
+  colorStrip,
+  seed,
+  children,
+}) => {
+  const nodeStyle = Object.assign(
+    {},
+    styles.container,
+    outlined && styles.containerOutline
+    // seed && styles.nodeSeedContainer
+  );
+
   return (
-    <div style={outlined ? styles.containerOutline : styles.container}>
-      <Handle
-        type="target"
-        position={"left" as Position}
-        id="l"
-        style={styles.handle}
-      />
-      <div
-        style={Object.assign({}, styles.colorStrip, {
-          backgroundColor: colorStrip,
-        })}
-      />
-      <div style={styles.content}>{children}</div>
-      <Handle
-        type="source"
-        position={"right" as Position}
-        id="r"
-        style={styles.handle}
-      />
+    <div style={styles.outerContainer}>
+      {/* {seed && (
+        <div style={styles.seedContainer}>
+          <Text>{seed}</Text>
+        </div>
+      )} */}
+      <div style={nodeStyle}>
+        <Handle
+          type="target"
+          position={"left" as Position}
+          id="l"
+          style={styles.handle}
+        />
+        <div
+          style={Object.assign({}, styles.colorStrip, {
+            backgroundColor: colorStrip,
+          })}
+        />
+        <div style={styles.content}>{children}</div>
+        <Handle
+          type="source"
+          position={"right" as Position}
+          id="r"
+          style={styles.handle}
+        />
+      </div>
     </div>
   );
 };
 
 const styles: StyleSheetCSS = {
   container: {
-    padding: 16,
-    backgroundColor: colors.navy1,
+    padding: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+    borderRadius: 12,
+    minWidth: 256,
     display: "flex",
-    borderRadius: 16,
     borderWidth: 4,
     borderStyle: "solid",
     borderColor: colors.navy1,
-    minWidth: 256,
+    backgroundColor: colors.navy1,
   },
   containerOutline: {
-    borderWidth: 4,
-    borderStyle: "solid",
-    borderColor: colors.navy1,
     backgroundColor: colors.navy2,
-    padding: 16,
-    display: "flex",
-    borderRadius: 16,
-    minWidth: 256,
+  },
+  nodeSeedContainer: {
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
   },
   colorStrip: {
-    width: 12,
+    width: 10,
     height: 48,
     borderRadius: 16,
     marginRight: 12,
+  },
+  outerContainer: {
+    cursor: "pointer",
+    display: "flex",
+  },
+  seedContainer: {
+    flex: 1,
+    borderTopLeftRadius: 16,
+    borderBottomLeftRadius: 16,
+    backgroundColor: colors.gray2,
+    alignItems: "center",
+    width: 18,
+    justifyContent: "center",
+    display: "flex",
+  },
+  seedSpacer: {
+    width: 18,
   },
   content: {
     // justifyContent: "space-between",

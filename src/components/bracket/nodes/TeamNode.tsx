@@ -3,16 +3,18 @@ import { Text } from "../../general";
 import colors from "../../../constants/Colors";
 
 export interface TeamNodeProps {
-  data: any;
+  data: {
+    team: Team;
+  };
 }
 
 const TeamNode: React.FC<TeamNodeProps> = ({ data }) => {
   return (
-    <Node colorStrip={data.color}>
+    <Node colorStrip={data.team.color || colors.gray2} seed={1}>
       <div style={styles.data}>
-        <Text fontSize={20}>{data.text}</Text>
+        <Text fontSize={18}>{data.team.name}</Text>
         <Text fontSize={14} color={colors.gray1}>
-          {data.wins} W {data.losses} L - 3409 MMR
+          {data.team.elo ? `${data.team.elo} Rating` : "No Rating"}
         </Text>
       </div>
     </Node>

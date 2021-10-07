@@ -2,14 +2,14 @@ import Node from "./Node";
 import { Text } from "../../general";
 import colors from "../../../constants/Colors";
 
-export interface TbdNodeProps {}
+export interface ByeNodeProps {}
 
-const TbdNode: React.FC<TbdNodeProps> = () => {
+const ByeNode: React.FC<ByeNodeProps> = () => {
   return (
     <Node colorStrip={colors.navy1} outlined>
       <div style={styles.inlineData}>
-        <Text fontSize={18} color={colors.gray1}>
-          To be determined...
+        <Text mono fontSize={18} color={colors.gray1}>
+          BYE
         </Text>
       </div>
     </Node>
@@ -30,4 +30,4 @@ const styles: StyleSheetCSS = {
   },
 };
 
-export default TbdNode;
+export default ByeNode;
