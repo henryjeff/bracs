@@ -6,6 +6,7 @@ export interface TextProps {
   style?: React.CSSProperties;
   fontSize?: number;
   color?: string;
+  mono?: boolean;
   weight?: FontWeights;
   verticalPadding?: boolean;
   horizontalPadding?: boolean;
@@ -21,6 +22,7 @@ const Text: React.FC<TextProps> = (props) => {
     fontSize,
     color,
     weight,
+    mono,
     verticalPadding,
     horizontalPadding,
     letterSpacing,
@@ -42,6 +44,7 @@ const Text: React.FC<TextProps> = (props) => {
     textWrap && { whiteSpace: "wrap" },
     lineHeight && { lineHeight: lineHeight },
     noSelect && styles.noSelect,
+    mono && styles.mono,
     props.style
   );
 
@@ -64,6 +67,11 @@ const styles: StyleSheetCSS = {
   horizontalPadding: {
     paddingLeft: 8,
     paddingRight: 8,
+  },
+  mono: {
+    fontWeight: "lighter",
+    letterSpacing: 1.5,
+    fontFamily: "monospace",
   },
   noSelect: {
     userSelect: "none",
