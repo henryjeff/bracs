@@ -1,0 +1,48 @@
+type User @model {
+  id: ID!
+  name: String!
+  email: String!
+  phone: String
+  password: String!
+}
+
+type Bracket @model {
+  id: ID!
+  name: String!
+  head: Game @connection(fields: ["id"])
+  owner: User! @connection(fields: ["id"])
+}
+
+type Game @model {
+  id: ID!
+  name: String!
+  date: AWSTimestamp!
+  rTeam: Team @connection(fields: ["id"])
+  lTeam: Team @connection(fields: ["id"])
+  rGame: Game @connection(fields: ["id"])
+  lGame: Game @connection(fields: ["id"])
+}
+
+type Team @model {
+  id: ID!
+  name: String!
+  image: String
+  elo: Int
+}
+
+type UserOnTeam @model {
+  user: User @connection
+  team: Team @connection
+  role: Role @connection
+}
+
+type UserInBracket @model {
+  user: User @connection
+  bracket: Bracket @connection
+  role: Role @connection
+}
+
+type Role @model {
+  id: ID!
+  desc: String!
+}
