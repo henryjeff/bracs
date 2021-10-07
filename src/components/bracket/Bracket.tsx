@@ -4,9 +4,7 @@ import useLayout from "../../hooks/useLayout";
 import TeamNode from "./nodes/TeamNode";
 import InProgressNode from "./nodes/InProgressNode";
 import TbdNode from "./nodes/TbdNode";
-import BuyNode from "./nodes/ByeNode";
-
-import { convertListToElements } from "./BracketDS";
+import ByeNode from "./nodes/ByeNode";
 
 export interface BracketProps {
   elements: Elements<any>;
@@ -53,7 +51,7 @@ const nodeTypes = {
   team: TeamNode,
   inProgress: InProgressNode,
   tbd: TbdNode,
-  buy: BuyNode,
+  buy: ByeNode,
 };
 
 export default Bracket;
