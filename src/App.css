@@ -5,7 +5,13 @@ body {
   padding: 0;
 }
 
-/* layout.css.aspect-ratio.enabled */
+:root {
+  --header-height: 108px;
+}
+
+.topNavigation {
+  height: var(--header-height);
+}
 
 .wrapper {
   display: grid;
@@ -16,6 +22,30 @@ body {
   grid-template-rows: var(--header-height) 1fr;
   grid-template-columns: 0fr auto;
   min-height: 100vh;
+}
+
+.header {
+  grid-area: header;
+  position: sticky;
+  top: 0;
+  z-index: 10000;
+  height: var(--header-height);
+}
+
+.content {
+  grid-area: content;
+  /* background-color: yellow; */
+  min-height: calc(100vh - var(--header-height));
+  /* margin-top: calc(0px - var(--header-height)); */
+}
+
+.sticky-content {
+  position: sticky;
+  bottom: 0px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding-top: var(--header-height);
+  margin-top: calc(0px - var(--header-height));
 }
 
 #loading {
