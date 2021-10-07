@@ -2,7 +2,7 @@ const colors = {
   navy1: "#2A2B33", // navy
   navy2: "#222127", // darkest navy
   gray1: "#8E8D95", // lightest gray
-  gray2: "#8E8D9544",
+  gray2: "#383A4A",
   white: "#FFFFFF",
 } as const;
 
