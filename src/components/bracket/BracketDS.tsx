@@ -132,3 +132,5 @@ const generateSeedPlacement = (depth: number) => {
   }
   return table;
 };
+
+console.log(generateSeedPlacement(3));

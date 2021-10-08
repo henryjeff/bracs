@@ -111,18 +111,12 @@ const TextInput: React.FC<TextInputProps> = ({
       {showContentToggle && (
         <TouchableDiv style={styles.eyeContainer} onPress={toggleShowContent}>
           {showSensitiveContent ? (
-            <AnimatedMountView
-              containerStyles={styles.flex}
-              mountInitialOffset={10}
-            >
+            <AnimatedMountView styles={styles.flex} mountInitialOffset={10}>
               <Icon icon="edit" style={styles.icon} />
             </AnimatedMountView>
           ) : (
             <div style={styles.flex}>
-              <AnimatedMountView
-                containerStyles={styles.flex}
-                mountInitialOffset={10}
-              >
+              <AnimatedMountView styles={styles.flex} mountInitialOffset={10}>
                 <Icon icon="edit" style={styles.icon} />
               </AnimatedMountView>
             </div>

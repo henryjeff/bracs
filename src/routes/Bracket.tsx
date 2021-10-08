@@ -8,14 +8,13 @@ const BracketRoute: React.FC<{}> = () => {
   const [elements, setElements] = useState<Elements<any>>();
 
   useEffect(() => {
-    const e = convertListToElements(["a", "b", "c", "d", "e", "d"]);
+    const e = convertListToElements(["a", "b", "c", "d", "e", "f", "g", "h"]);
     setElements(e);
   }, []);
 
   return (
     <div style={styles.page}>
       <div style={styles.bracket}>
-        <div>{/* <Text>Tournament Name</Text> */}</div>
         {elements && <Bracket elements={elements} />}
       </div>
     </div>
