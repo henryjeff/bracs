@@ -3,8 +3,11 @@ import { persistor, store } from "./store";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import TopNavigation from "./components/navigation/TopNavigation";
-import BracketRoute from "./routes/MakeBracket";
-import MakeBracketRoute from "./routes/Bracket";
+
+import MakeBracketRoute from "./routes/MakeBracket";
+import BracketRoute from "./routes/Bracket";
+import HomeRoute from "./routes/Home";
+
 import "./App.css";
 
 function Routes() {
@@ -12,6 +15,7 @@ function Routes() {
     <div style={styles.body}>
       <Switch>
         {/** Public Routes */}
+        <Route exact path="/" component={HomeRoute} />
         <Route exact path="/view" component={BracketRoute} />
         <Route exact path="/make" component={MakeBracketRoute} />
       </Switch>
@@ -27,31 +31,23 @@ function App() {
           <div className="wrapper">
             <div className="header">
               <TopNavigation />
-              {/* <GlobalAlertQueue /> */}
             </div>
-            {/* <div className="sidebar-1">
-              <div className="sticky-spacer"></div>
-              <div className="sticky-content">
-                <SideNavigation />
-              </div>
-            </div> */}
             <div className="content">
-              {/* <div className="sticky-content"> */}
               <Routes />
-              {/* </div> */}
             </div>
           </div>
         </Router>
       </PersistGate>
     </Provider>
-    // <div className="App" style={{ width: 4000, height: 4000 }}>
-    //   <Bracket />
-    // </div>
   );
 }
 
 const styles: StyleSheetCSS = {
-  body: {},
+  body: {
+    display: "flex",
+    width: "100%",
+    justifyContent: "center",
+  },
 };
 
 export default App;

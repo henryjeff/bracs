@@ -108,8 +108,6 @@ const Button: React.FC<ButtonProps> = ({
 
 const styles: StyleSheetCSS = {
   container: {
-    marginBottom: 8,
-    marginTop: 8,
     width: "100%",
   },
   button: {
@@ -145,19 +143,19 @@ const styles: StyleSheetCSS = {
     paddingTop: 2,
   },
   disabled: {
-    opacity: 0.8,
+    opacity: 0.4,
     cursor: "default",
     backgroundColor: `${colors.navy1}68`,
   },
   disabledOutline: {
-    opacity: 0.8,
+    opacity: 0.4,
     cursor: "default",
     borderColor: `${colors.gray1}`,
   },
   outline: {
     borderWidth: 2,
-    borderColor: colors.white,
-    color: colors.white,
+    borderColor: colors.gray1,
+    color: colors.gray1,
     backgroundColor: "transparent",
   },
   hoverOutline: {

@@ -70,7 +70,10 @@ export const convertTreeToElements = (tree: Tree<Team>) => {
 };
 
 const generateRandomColor = () => {
-  return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+  const hue = Math.floor(Math.random() * 360);
+  const saturation = 75 + "%";
+  const lightness = 70 + "%";
+  return "hsl(" + hue + ", " + saturation + ", " + lightness + ")";
 };
 
 export const convertListToElements = (teams: string[]): Elements<any> => {

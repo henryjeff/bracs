@@ -159,7 +159,7 @@ export class Tree<T> {
     // If the node is a leaf, return a position
     if (index + 1 >= Math.ceil(total / 2)) {
       const adjustedIndex = index - Math.ceil(total / 2) + 1;
-      return { x: 0, y: 100 * adjustedIndex + 108 };
+      return { x: 0, y: 100 * adjustedIndex + 72 };
     } else {
       // If not recursively find child positions to average and indent
       const node = nodes[index];

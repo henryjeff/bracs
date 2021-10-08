@@ -6,11 +6,15 @@ body {
 }
 
 :root {
-  --header-height: 108px;
+  --header-height: 72px;
 }
 
 .topNavigation {
   height: var(--header-height);
+}
+
+input {
+  background-color: none;
 }
 
 .wrapper {
@@ -35,8 +39,9 @@ body {
 .content {
   grid-area: content;
   /* background-color: yellow; */
-  min-height: calc(100vh - var(--header-height));
-  /* margin-top: calc(0px - var(--header-height)); */
+  /* min-height: calc(100vh - var(--header-height)); */
+  /* margin-top: calc(0px + var(--header-height)); */
+  /* margin-top: 4px; */
 }
 
 .sticky-content {

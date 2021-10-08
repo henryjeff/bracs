@@ -35,7 +35,9 @@ const Bracket: React.FC<BracketProps> = ({ elements }) => {
         nodesDraggable={false}
         elements={elements}
         nodeTypes={nodeTypes}
-      />
+      >
+        {/* <Text>Tournament Name</Text> */}
+      </ReactFlow>
     </div>
   );
 };
@@ -44,6 +46,7 @@ const styles: StyleSheetCSS = {
   container: {
     width: "100%",
     height: "100%",
+    cursor: "grab",
   },
 };
 
