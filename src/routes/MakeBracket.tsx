@@ -2,16 +2,7 @@ import { AnimatedMountView, Button, TextInput } from "../components/general";
 import { Draggable, Droppable, DragDropContext } from "react-beautiful-dnd";
 import TeamPreview from "../components/view/TeamPreview";
 import { useState, useCallback } from "react";
-import colors from "../constants/Colors";
 import { generateRandomColor } from "../util/randomColor";
-// import colors from "../constants/Colors";
-
-// const getItems = (count: number) =>
-//   Array.from({ length: count }, (v, k) => k).map((k) => ({
-//     id: `item-${k}`,
-//     content: `item ${k}`,
-//     color: colors.gray1,
-//   }));
 
 type Item = {
   id: string;
