@@ -1,6 +1,8 @@
 import { FlowElement, Elements } from "react-flow-renderer";
 import { Tree } from "./Tree";
 import colors from "../../constants/Colors";
+import { ConsoleLogger } from "@aws-amplify/core";
+import { Z_BEST_COMPRESSION } from "zlib";
 
 // export const bracket: Bracket = {
 //   root: "0",
@@ -99,6 +101,7 @@ export const convertListToElements = (teams: string[]): Elements<any> => {
   tree.constructTree(depth);
   // Generate a table of seed placements
   const placements = generateSeedPlacement(depth);
+  console.log(placements)
   // For each placement navigate to and replace value with a team
   placements.forEach((directions, index) => {
     tree.navigateAndReplace(_teams[index], directions);
@@ -110,25 +113,38 @@ export const convertListToElements = (teams: string[]): Elements<any> => {
   return elements;
 };
 
-const generateSeedPlacement = (depth: number) => {
-  const rows = 2 ** depth;
-  const table = [];
-  for (let i = 0; i < rows; i++) {
-    let row = [];
-    for (let j = depth - 1; j >= 0; j--) {
-      row.push(Math.floor((i / Math.round(2 ** j)) % 2));
+const generateSeedPlacement = (depth: number): number[][] => {
+
+  //base case
+  if (depth == 1) {
+    let a = [ 
+              [0,], 
+              [1,]
+            ];
+    return a;
+  } else {
+
+    //recurse to get previous depth seeding directions list
+    let minusDepthList = generateSeedPlacement(depth - 1);
+  
+    //create new list with copies of previous depth
+    let newList: number[][] = [];
+    minusDepthList.forEach(elem => {
+      newList.push([...elem]);
+    })
+
+    //combine new copied list with reveresed old list
+    newList = newList.concat([...minusDepthList.reverse()]);
+
+    //add 0's to the first half of sub lists and 1's to second half
+    for (let i = 0; i < newList.length; i++) {
+      if (i < newList.length / 2) {
+        newList[i].push(0);
+      } else {
+        newList[i].push(1);
+      }
     }
-    row = row.reverse();
-    table.push(row);
+    
+    return newList;
   }
-  for (let i = 0; i < rows / 2; i++) {
-    if (i % 2 === 0) continue;
-    const ai = i * 2;
-    const bi = i * 2 + 1;
-    const a: number[] = table[ai];
-    const b: number[] = table[bi];
-    table[bi] = a;
-    table[ai] = b;
-  }
-  return table;
 };
