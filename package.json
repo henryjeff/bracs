@@ -12,6 +12,7 @@
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
     "aws-amplify": "^4.3.0",
+    "dotenv": "^10.0.0",
     "framer-motion": "^4.1.17",
     "graphql-request": "^3.5.0",
     "react": "^17.0.2",
@@ -24,7 +25,18 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "typescript": "^4.4.3",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "apollo-cache-inmemory": "^1.1.0",
+    "apollo-client": "^2.0.3",
+    "apollo-link": "^1.0.3",
+    "apollo-link-http": "^1.2.0",
+    "aws-sdk": "^2.141.0",
+    "aws-appsync": "^1.0.0",
+    "es6-promise": "^4.1.1",
+    "graphql": "^0.11.7",
+    "graphql-tag": "^2.5.0",
+    "isomorphic-fetch": "^2.2.1",
+    "ws": "^3.3.1"
   },
   "scripts": {
     "start": "react-scripts start",
