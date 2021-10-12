@@ -10,6 +10,9 @@ import HomeRoute from "./routes/Home";
 
 import "./App.css";
 
+// require('dotenv').config({path: `${__dirname}/.env`})
+// console.log(process.env)
+
 function Routes() {
   return (
     <div style={styles.body}>
