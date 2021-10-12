@@ -3,7 +3,7 @@ import { motion, MotionProps } from "framer-motion";
 import { Easing, AnimationEasing } from "../../constants/Animation";
 
 export interface AnimatedMountViewProps {
-  containerStyles?: React.CSSProperties;
+  styles?: React.CSSProperties;
   easing?: AnimationEasing;
   duration?: number;
   motionProps?: MotionProps;
@@ -14,7 +14,7 @@ export interface AnimatedMountViewProps {
 }
 
 const AnimatedMountView: React.FC<AnimatedMountViewProps> = ({
-  containerStyles,
+  styles,
   easing,
   duration,
   motionProps,
@@ -61,7 +61,7 @@ const AnimatedMountView: React.FC<AnimatedMountViewProps> = ({
       {...divProps}
       {...motionProps}
       className={className}
-      style={containerStyles}
+      style={styles}
     >
       {children}
     </motion.div>

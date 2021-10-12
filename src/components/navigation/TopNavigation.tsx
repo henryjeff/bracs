@@ -68,7 +68,7 @@ const TopNavigation: React.FC<{}> = () => {
       </div>
       <div style={styles.sideNav}>
         <NavigationOption to="login">
-          <Button text="Login" outline />
+          <Button text="Login" />
         </NavigationOption>
       </div>
     </div>

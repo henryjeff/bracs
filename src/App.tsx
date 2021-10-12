@@ -7,14 +7,19 @@ import TopNavigation from "./components/navigation/TopNavigation";
 import MakeBracketRoute from "./routes/MakeBracket";
 import BracketRoute from "./routes/Bracket";
 import HomeRoute from "./routes/Home";
+import SignInRoute from "./routes/SignIn";
 
 import "./App.css";
+
+// require('dotenv').config({path: `${__dirname}/.env`})
+// console.log(process.env)
 
 function Routes() {
   return (
     <div style={styles.body}>
       <Switch>
         {/** Public Routes */}
+        <Route exact path="/login" component={SignInRoute} />
         <Route exact path="/" component={HomeRoute} />
         <Route exact path="/view" component={BracketRoute} />
         <Route exact path="/make" component={MakeBracketRoute} />

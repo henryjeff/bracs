@@ -20,10 +20,7 @@ const InProgressNode: React.FC<InProgressNodeProps> = () => {
               </div>
             </AnimatedMountView>
           ) : (
-            <AnimatedMountView
-              key="inprogress"
-              containerStyles={styles.inlineData}
-            >
+            <AnimatedMountView key="inprogress" styles={styles.inlineData}>
               <LoadingIndicator size={16} color={colors.gray1} />
               <Text
                 fontSize={18}
