@@ -7,6 +7,7 @@ export interface TeamPreviewProps {
   name: string;
   color: string;
   onColorChange: (color: string) => void;
+  onDelete: () => void;
 }
 
 const TeamPreview: React.FC<TeamPreviewProps> = ({
@@ -14,6 +15,7 @@ const TeamPreview: React.FC<TeamPreviewProps> = ({
   name,
   color,
   onColorChange,
+  onDelete,
 }) => {
   const changeColor = () => {
     onColorChange(generateRandomColor());
@@ -36,11 +38,11 @@ const TeamPreview: React.FC<TeamPreviewProps> = ({
             })}
           />
         </TouchableDiv>
-        <Text>{name}</Text>
+        <Text textWrap={true}>{name}</Text>
       </div>
       <div style={styles.actions}>
-        <TouchableDiv>
-          <Icon icon="edit" size={12} style={styles.icon} />
+        <TouchableDiv onPress={onDelete}>
+          <Icon icon="circleCross" size={14} style={styles.icon} />
         </TouchableDiv>
         <div>
           <Icon icon="menu" size={14} style={styles.icon} />
@@ -91,6 +93,7 @@ const styles: StyleSheetCSS = {
     paddingRight: 12,
     justifyContent: "flex-start",
     alignItems: "center",
+    cursor: "default",
   },
   icon: {
     padding: 12,

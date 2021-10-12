@@ -1,7 +1,7 @@
 import { FlowElement, Elements } from "react-flow-renderer";
 import { Tree } from "./Tree";
 import colors from "../../constants/Colors";
-
+// import { generateRandomColor } from "../../util/randomColor";
 // export const bracket: Bracket = {
 //   root: "0",
 //   matches: {
@@ -69,14 +69,12 @@ export const convertTreeToElements = (tree: Tree<Team>) => {
   return elements;
 };
 
-const generateRandomColor = () => {
-  const hue = Math.floor(Math.random() * 360);
-  const saturation = 75 + "%";
-  const lightness = 70 + "%";
-  return "hsl(" + hue + ", " + saturation + ", " + lightness + ")";
-};
-
-export const convertListToElements = (teams: string[]): Elements<any> => {
+export const convertListToElements = (
+  teams: {
+    name: string;
+    color: string;
+  }[]
+): Elements<any> => {
   // Total number of teams
   const size = teams.length;
   // Depth is the total depth of the tree
@@ -88,8 +86,8 @@ export const convertListToElements = (teams: string[]): Elements<any> => {
   for (let i = 0; i < _size; i++)
     _teams[i] = teams[i]
       ? {
-          name: teams[i],
-          color: generateRandomColor(),
+          name: teams[i].name,
+          color: teams[i].color,
           elo: Math.round(Math.random() * 3000),
         }
       : undefined;

@@ -7,7 +7,9 @@ import { Icon, TouchableDiv, AnimatedMountView } from "../general";
 export interface TextInputProps {
   containerStyles?: React.CSSProperties;
   icon?: IconName;
+  _ref?: React.LegacyRef<HTMLInputElement>;
   inputType?: string;
+  iconSize?: number;
   inputStyle?: React.CSSProperties;
   placeholderText?: string;
   value?: string;
@@ -26,6 +28,7 @@ export interface TextInputProps {
 const TextInput: React.FC<TextInputProps> = ({
   containerStyles,
   icon,
+  iconSize,
   inputType,
   inputStyle,
   placeholderText,
@@ -38,6 +41,7 @@ const TextInput: React.FC<TextInputProps> = ({
   onFocusChange,
   showContentToggle,
   thin,
+  _ref,
 }) => {
   const [showSensitiveContent, setShowSensitiveContent] = useState(false);
 
@@ -83,6 +87,7 @@ const TextInput: React.FC<TextInputProps> = ({
           <Icon
             style={disabled ? styles.disabledIcon : styles.icon}
             icon={icon}
+            size={iconSize}
           />
         </div>
       ) : ItemStart ? (
@@ -100,6 +105,7 @@ const TextInput: React.FC<TextInputProps> = ({
               : "password"
             : inputType
         }
+        ref={_ref as React.LegacyRef<HTMLInputElement>}
         style={textInputStyle}
         value={value}
         disabled={disabled}
@@ -111,15 +117,21 @@ const TextInput: React.FC<TextInputProps> = ({
       {showContentToggle && (
         <TouchableDiv style={styles.eyeContainer} onPress={toggleShowContent}>
           {showSensitiveContent ? (
-            <AnimatedMountView styles={styles.flex} mountInitialOffset={10}>
-              <Icon icon="edit" style={styles.icon} />
+            <AnimatedMountView
+              styles={styles.flex}
+              key={"hide"}
+              mountInitialOffset={10}
+            >
+              <Icon icon="eyeCross" style={styles.icon} />
             </AnimatedMountView>
           ) : (
-            <div style={styles.flex}>
-              <AnimatedMountView styles={styles.flex} mountInitialOffset={10}>
-                <Icon icon="edit" style={styles.icon} />
-              </AnimatedMountView>
-            </div>
+            <AnimatedMountView
+              styles={styles.flex}
+              key={"show"}
+              mountInitialOffset={10}
+            >
+              <Icon icon="eye" style={styles.icon} />
+            </AnimatedMountView>
           )}
         </TouchableDiv>
       )}
@@ -131,8 +143,9 @@ const styles: StyleSheetCSS = {
   inputContainer: {
     width: "100%",
     borderWidth: 0,
+    height: 36,
     borderBottomWidth: 2,
-    borderColor: colors.gray1,
+    borderColor: `${colors.gray1}88`,
     borderStyle: "solid",
     display: "flex",
     flexDirection: "row",
@@ -142,15 +155,15 @@ const styles: StyleSheetCSS = {
   },
   eyeContainer: {
     paddingLeft: 12,
-    paddingRight: 16,
+    paddingRight: 12,
     display: "flex",
   },
   filled: {
     borderWidth: 0,
   },
   iconContainer: {
-    paddingLeft: 4,
-    paddingRight: 4,
+    paddingLeft: 8,
+    paddingRight: 8,
     justifyContent: "center",
     alignItems: "center",
     display: "flex",

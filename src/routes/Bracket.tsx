@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { Elements } from "react-flow-renderer";
 import Bracket from "../components/bracket/Bracket";
+import { useParams } from "react-router";
 import { convertListToElements } from "../components/bracket/BracketDS";
 // import { Text } from "../components/general";
 
 const BracketRoute: React.FC<{}> = () => {
+  // const { teams } = useParams<{ teams: Team[] }>();
   const [elements, setElements] = useState<Elements<any>>();
 
   useEffect(() => {
-    const e = convertListToElements(["a", "b", "c", "d", "e", "f", "g", "h"]);
-    setElements(e);
+    // const e = convertListToElements(["a", "b", "c", "d", "e", "f", "g", "h"]);
+    // setElements(e);
   }, []);
 
   return (
