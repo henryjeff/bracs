@@ -19,7 +19,7 @@ export interface TextInputProps {
   showContentToggle?: boolean;
   thin?: boolean;
   squared?: boolean;
-  onChangeText:
+  onChangeText?:
     | React.Dispatch<React.SetStateAction<string>>
     | ((text: string) => void);
   onFocusChange?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -45,17 +45,11 @@ const TextInput: React.FC<TextInputProps> = ({
 }) => {
   const [showSensitiveContent, setShowSensitiveContent] = useState(false);
 
-  const textInputStyle = Object.assign(
-    {},
-    styles.input,
-    disabled && styles.disabled,
-    thin && styles.thin,
-    inputStyle
-  );
+  const textInputStyle = Object.assign({}, styles.input, inputStyle);
 
   const onChangeHandler = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      onChangeText(event.target.value);
+      onChangeText && onChangeText(event.target.value);
     },
     [onChangeText]
   );
@@ -77,8 +71,10 @@ const TextInput: React.FC<TextInputProps> = ({
       style={Object.assign(
         {},
         styles.inputContainer,
+        thin && styles.thin,
         filled && styles.filled,
         squared && styles.squared,
+        disabled && styles.disabled,
         containerStyles
       )}
     >
@@ -145,7 +141,7 @@ const styles: StyleSheetCSS = {
     borderWidth: 0,
     height: 36,
     borderBottomWidth: 2,
-    borderColor: `${colors.gray1}88`,
+    borderColor: colors.gray2,
     borderStyle: "solid",
     display: "flex",
     flexDirection: "row",
@@ -187,21 +183,21 @@ const styles: StyleSheetCSS = {
   },
 
   startSpacer: {
-    paddingRight: 20,
+    paddingRight: 4,
   },
   flex: {
     display: "flex",
   },
   icon: {
-    opacity: 0.8,
+    // opacity: 0.8,
     width: 14,
   },
   disabled: {
+    opacity: 0.5,
     cursor: "not-allowed",
     color: colors.white,
   },
   disabledIcon: {
-    opacity: 0.3,
     width: 14,
   },
 };

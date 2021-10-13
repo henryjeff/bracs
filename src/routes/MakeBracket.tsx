@@ -1,14 +1,17 @@
 import {
   AnimatedMountView,
   Button,
-  Text,
   TextInput,
+  Toggle,
+  Text,
 } from "../components/general";
 import { Draggable, Droppable, DragDropContext } from "react-beautiful-dnd";
 import TeamPreview from "../components/view/TeamPreview";
 import { useState, useCallback, createRef, useEffect } from "react";
 import { generateRandomColor } from "../util/randomColor";
+import reorder from "../util/reorder";
 import useKeyPress from "../hooks/useKeyPress";
+import colors from "../constants/Colors";
 
 type TeamItem = {
   id: string;
@@ -19,17 +22,9 @@ type TeamItem = {
 const getItemStyle = (draggableStyle: any) => ({
   userSelect: "none",
   padding: 2,
-  margin: `0 0 ${1}px 0`,
+  margin: `0 0 1px 0`,
   ...draggableStyle,
 });
-
-const reorder = (list: any[], startIndex: number, endIndex: number): any[] => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-};
 
 const MakeBracketRoute: React.FC<{}> = () => {
   const [teams, setTeams] = useState<TeamItem[]>([]);
@@ -38,10 +33,12 @@ const MakeBracketRoute: React.FC<{}> = () => {
   const [, updateState] = useState({});
   const forceUpdate = useCallback(() => updateState({}), []);
 
+  const [useElo, setUseElo] = useState(false);
+
   const enterPressed = useKeyPress("Enter");
 
   const addTeam = useCallback(() => {
-    if (newTeam.length > 1) {
+    if (newTeam.length > 0) {
       teams.push({
         id: `${teams.length}`,
         content: newTeam,
@@ -92,6 +89,21 @@ const MakeBracketRoute: React.FC<{}> = () => {
           onChangeText={setNewTeam}
           value={newTeam}
         />
+        {useElo && (
+          <AnimatedMountView
+            mountDirection="x"
+            mountInitialOffset={-16}
+            styles={{ marginLeft: 16 }}
+          >
+            <TextInput
+              icon="rating"
+              placeholderText="Rating"
+              onChangeText={() => {}}
+              // onChangeText={setNewTeam}
+              // value={newTeam}
+            />
+          </AnimatedMountView>
+        )}
         <div style={styles.topInputButtons}>
           <Button
             text="Add"
@@ -101,6 +113,45 @@ const MakeBracketRoute: React.FC<{}> = () => {
           <div style={styles.spacer} />
           <Button text="Start" disabled={teams.length < 2} />
         </div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          height: 32,
+          // backgroundColor: "red",
+        }}
+      >
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <Toggle onToggleChange={(value) => setUseElo(value)} />
+          <Text style={{ marginLeft: 12 }} color={colors.gray1}>
+            Use ELO Rating for seeding
+          </Text>
+        </div>
+        {useElo && (
+          <AnimatedMountView
+            styles={{
+              display: "flex",
+              flexDirection: "row",
+              marginTop: -2,
+              marginLeft: 8,
+              alignItems: "center",
+            }}
+            mountDirection="x"
+            mountInitialOffset={-16}
+          >
+            <Text style={{ marginLeft: 24 }} color={colors.gray1}>
+              Default ELO Rating:
+            </Text>
+            <TextInput
+              thin
+              icon="rating"
+              containerStyles={{ width: 96, marginLeft: 12 }}
+              placeholderText={"Ex. 1290"}
+            />
+          </AnimatedMountView>
+        )}
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="ok">
@@ -141,7 +192,7 @@ const styles: StyleSheetCSS = {
   topInput: {
     display: "flex",
     flexDirection: "row",
-    marginBottom: 32,
+    marginBottom: 16,
   },
   spacer: {
     width: 24,

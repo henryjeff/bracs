@@ -16,26 +16,32 @@ export type FontWeights = "regular" | "medium" | "bold" | "black";
 export const FontStyle: { [key in FontWeights]: StyleSheet } = {
   regular: {
     //@ts-ignore
-    fontFamily: "bc-eric-machat, sans-serif",
+    fontFamily: "canada-type-gibson, sans-serif",
     //@ts-ignore
     fontWeight: 400,
     //@ts-ignore
     fontStyle: "normal",
+    //@ts-ignore
+    letterSpacing: 0.1,
   },
   medium: {
     //@ts-ignore
-    fontFamily: "bc-eric-machat, sans-serif",
+    fontFamily: "canada-type-gibson, sans-serif",
+    //@ts-ignore
+    fontWeight: 500,
+    //@ts-ignore
+    fontStyle: "normal",
+    //@ts-ignore
+    letterSpacing: 0.1,
+  },
+  bold: {
+    //@ts-ignore
+    fontFamily: "canada-type-gibson, sans-serif",
     //@ts-ignore
     fontWeight: 600,
     //@ts-ignore
     fontStyle: "normal",
-  },
-  bold: {
     //@ts-ignore
-    fontFamily: "bc-eric-machat, sans-serif",
-    //@ts-ignore
-    fontWeight: 700,
-    //@ts-ignore
-    fontStyle: "normal",
+    letterSpacing: 0.1,
   },
 };

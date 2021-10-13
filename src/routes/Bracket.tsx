@@ -1,19 +1,23 @@
 import { useEffect, useState } from "react";
 import { Elements } from "react-flow-renderer";
 import Bracket from "../components/bracket/Bracket";
-import { useParams } from "react-router";
+// import { useParams } from "react-router";
 import { convertListToElements } from "../components/bracket/BracketDS";
 // import { Text } from "../components/general";
 
-console.log(process.env.API_KEY)
+console.log(process.env.API_KEY);
 
 const BracketRoute: React.FC<{}> = () => {
   // const { teams } = useParams<{ teams: Team[] }>();
   const [elements, setElements] = useState<Elements<any>>();
 
   useEffect(() => {
-    // const e = convertListToElements(["a", "b", "c", "d", "e", "f", "g", "h"]);
-    // setElements(e);
+    const e = convertListToElements([
+      { name: "Team 1", color: "#fff" },
+      { name: "Team 2", color: "#fff" },
+      { name: "Team 3", color: "#fff" },
+    ]);
+    setElements(e);
   }, []);
 
   return (

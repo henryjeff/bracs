@@ -44,6 +44,22 @@ input {
   /* margin-top: 4px; */
 }
 
+input::-webkit-input-placeholder {
+  color: #8e8d95;
+}
+
+input::-moz-placeholder {
+  color: #8e8d95;
+}
+
+input::-ms-placeholder {
+  color: #8e8d95;
+}
+
+input::placeholder {
+  color: #8e8d95;
+}
+
 .sticky-content {
   position: sticky;
   bottom: 0px;

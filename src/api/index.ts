@@ -95,4 +95,32 @@
 //   };
 //   return configs;
 // }
-export default {};
+import { config } from "../aws-exports";
+import { GraphQLClient, gql } from "graphql-request";
+
+const query = gql`
+  {
+    getUser(id: "4196f8c4-a632-43c0-81a3-016ad72cd713") {
+      name
+      id
+      email
+      phone
+      updatedAt
+    }
+  }
+`;
+
+async function main() {
+  const endpoint = config.graphqlEndpoint;
+  const graphQLClient = new GraphQLClient(endpoint, {
+    headers: {
+      "x-api-key": config.apiKey,
+      //   authorization: "Bearer MY_TOKEN",
+    },
+  });
+
+  const data = await graphQLClient.request(query);
+  console.log(JSON.stringify(data, undefined, 2));
+}
+
+export default main;

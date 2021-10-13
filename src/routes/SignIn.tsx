@@ -1,40 +1,12 @@
-import { Button, TextInput } from "../components/general";
-import { config } from "../aws-exports";
-import { GraphQLClient, gql } from "graphql-request";
-import { useEffect } from "react";
-
-const query = gql`
-  {
-    getUser(id: "4196f8c4-a632-43c0-81a3-016ad72cd713") {
-      name
-      id
-      email
-      phone
-      updatedAt
-    }
-  }
-`;
-
-async function yo() {
-  const endpoint = config.graphqlEndpoint;
-  const graphQLClient = new GraphQLClient(endpoint, {
-    headers: {
-      "x-api-key": config.apiKey,
-      //   authorization: "Bearer MY_TOKEN",
-    },
-  });
-
-  const data = await graphQLClient.request(query);
-  console.log(JSON.stringify(data, undefined, 2));
-}
+import { Button, Text, TextInput } from "../components/general";
+import colors from "../constants/Colors";
 
 const SignInRoute: React.FC<{}> = () => {
-  useEffect(() => {
-    yo();
-  });
-
   return (
     <div style={{ width: 256, marginTop: 32 }}>
+      <Text weight="medium" fontSize={24} style={styles.header}>
+        Sign In
+      </Text>
       <TextInput
         iconSize={12}
         icon="user"
@@ -50,7 +22,18 @@ const SignInRoute: React.FC<{}> = () => {
         showContentToggle
         containerStyles={styles.input}
       />
-      <Button text="Login" containerStyles={styles.button} />
+      <div style={styles.buttons}>
+        <Button text="Login" />
+        <div style={styles.orContainer}>{/* <Text>OR</Text> */}</div>
+        <Button
+          iconSize={18}
+          icon="google"
+          text="Continue with Google"
+          buttonTextProps={{ color: colors.navy1 }}
+          buttonStyles={{ backgroundColor: "white" }}
+          containerStyles={styles.input}
+        />
+      </div>
     </div>
   );
 };
@@ -59,8 +42,17 @@ const styles: StyleSheetCSS = {
   input: {
     marginBottom: 16,
   },
-  button: {
+  buttons: {
     marginTop: 32,
+  },
+  header: {
+    marginBottom: 32,
+  },
+  orContainer: {
+    padding: 8,
+    // display: "flex",
+    // justifyContent: "center",
+    // alignItems: "center",
   },
 };
 

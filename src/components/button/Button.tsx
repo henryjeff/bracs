@@ -1,21 +1,26 @@
 import React, { useState } from "react";
 import { FontStyle } from "../../constants/Styles";
 import colors from "../../constants/Colors";
-import { Text, LoadingIndicator } from "../general";
+import { Text, LoadingIndicator, Icon } from "../general";
 import { TextProps } from "../general/Text";
+import { IconName } from "../../assets/icons";
+import { Link } from "react-router-dom";
 
 export interface ButtonProps {
   containerStyles?: React.CSSProperties;
   isLoading?: boolean;
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   text?: string;
+  icon?: IconName;
+  iconSize?: number;
   disabled?: boolean;
   outline?: boolean;
   buttonStyles?: React.CSSProperties;
   buttonHoverStyles?: React.CSSProperties;
   buttonTextProps?: TextProps;
-  noPadding?: boolean;
-  noMargin?: boolean;
+  padding?: boolean;
+  margin?: boolean;
+  linkTo?: string;
   thin?: boolean;
 }
 
@@ -24,13 +29,16 @@ const Button: React.FC<ButtonProps> = ({
   isLoading,
   onClick,
   text,
+  icon,
+  iconSize,
   disabled,
   outline,
   buttonStyles,
   buttonHoverStyles,
   buttonTextProps,
-  noPadding,
-  noMargin,
+  padding,
+  margin,
+  linkTo,
   children,
   thin,
 }) => {
@@ -64,17 +72,17 @@ const Button: React.FC<ButtonProps> = ({
     buttonStyles,
     isHovering && buttonHoverStyles,
     isActive && (outline ? styles.activeOutline : styles.active),
-    noPadding && { paddingLeft: 4, paddingRight: 4 },
+    padding && { paddingLeft: 4, paddingRight: 4 },
     thin && { height: 30, paddingLeft: 20, paddingRight: 20 }
   );
 
-  return (
+  const Button = (
     <div
       style={Object.assign(
         {},
         styles.container,
         containerStyles,
-        noMargin && { margin: 0 }
+        !linkTo && margin && { margin: 4 }
       )}
     >
       {isLoading ? (
@@ -91,8 +99,11 @@ const Button: React.FC<ButtonProps> = ({
           disabled={disabled}
           style={buttonStyle}
         >
+          {icon && (
+            <Icon size={iconSize || 14} icon={icon} style={styles.icon} />
+          )}
           {text ? (
-            <Text fontSize={14} {...buttonTextProps}>
+            <Text weight="medium" fontSize={14} {...buttonTextProps}>
               {text}
             </Text>
           ) : children ? (
@@ -104,11 +115,31 @@ const Button: React.FC<ButtonProps> = ({
       )}
     </div>
   );
+  if (linkTo) {
+    return (
+      <Link
+        style={Object.assign(
+          {},
+          styles.linkTo,
+          containerStyles,
+          margin && { margin: 4 }
+        )}
+        to={linkTo}
+      >
+        {Button}
+      </Link>
+    );
+  }
+
+  return Button;
 };
 
 const styles: StyleSheetCSS = {
   container: {
     width: "100%",
+  },
+  linkTo: {
+    textDecoration: "none",
   },
   button: {
     height: 32,
@@ -163,6 +194,9 @@ const styles: StyleSheetCSS = {
   },
   activeOutline: {
     opacity: 0.5,
+  },
+  icon: {
+    paddingRight: 8,
   },
 };
 
