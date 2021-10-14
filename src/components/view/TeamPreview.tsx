@@ -5,7 +5,8 @@ import { generateRandomColor } from "../../util/randomColor";
 export interface TeamPreviewProps {
   seed: number;
   name: string;
-  color: string;
+  elo?: number;
+  color?: string;
   onColorChange: (color: string) => void;
   onDelete: () => void;
 }
@@ -13,6 +14,7 @@ export interface TeamPreviewProps {
 const TeamPreview: React.FC<TeamPreviewProps> = ({
   seed,
   name,
+  elo,
   color,
   onColorChange,
   onDelete,
@@ -40,6 +42,12 @@ const TeamPreview: React.FC<TeamPreviewProps> = ({
         </TouchableDiv>
         <Text textWrap={true}>{name}</Text>
       </div>
+      {elo && (
+        <div style={styles.eloContainer}>
+          <Icon size={16} icon="rating" style={styles.eloIcon} />
+          <Text>{elo}</Text>
+        </div>
+      )}
       <div style={styles.actions}>
         <TouchableDiv onPress={onDelete}>
           <Icon icon="circleCross" size={14} style={styles.icon} />
@@ -82,6 +90,10 @@ const styles: StyleSheetCSS = {
     backgroundColor: colors.navy1,
   },
   actions: {
+    borderWidth: 0,
+    borderLeftWidth: 2,
+    borderColor: colors.navy1,
+    borderStyle: "solid",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -96,7 +108,18 @@ const styles: StyleSheetCSS = {
     cursor: "default",
   },
   icon: {
-    padding: 12,
+    paddingLeft: 12,
+    paddingRight: 12,
+  },
+  eloIcon: {
+    paddingRight: 6,
+  },
+  eloContainer: {
+    display: "flex",
+    marginRight: 16,
+    marginTop: -2,
+    justifyContent: "center",
+    alignItems: "center",
   },
 };
 

@@ -9,14 +9,14 @@ import { Draggable, Droppable, DragDropContext } from "react-beautiful-dnd";
 import TeamPreview from "../components/view/TeamPreview";
 import { useState, useCallback, createRef, useEffect } from "react";
 import { generateRandomColor } from "../util/randomColor";
+import usePrevious from "../hooks/usePrevious";
 import reorder from "../util/reorder";
 import useKeyPress from "../hooks/useKeyPress";
 import colors from "../constants/Colors";
 
 type TeamItem = {
   id: string;
-  content: string;
-  color: string;
+  content: Team;
 };
 
 const getItemStyle = (draggableStyle: any) => ({
@@ -29,6 +29,10 @@ const getItemStyle = (draggableStyle: any) => ({
 const MakeBracketRoute: React.FC<{}> = () => {
   const [teams, setTeams] = useState<TeamItem[]>([]);
   const [newTeam, setNewTeam] = useState<string>("");
+  const [newRating, setNewRating] = useState<string>("");
+  const [defaultRating, setDefaultRating] = useState<string>("");
+  const lastDefaultRating = usePrevious(defaultRating);
+
   const inputRef = createRef<HTMLElement>();
   const [, updateState] = useState({});
   const forceUpdate = useCallback(() => updateState({}), []);
@@ -37,25 +41,78 @@ const MakeBracketRoute: React.FC<{}> = () => {
 
   const enterPressed = useKeyPress("Enter");
 
+  const newTeamExists = useCallback(() => {
+    for (let i = 0; i < teams.length; i++) {
+      if (teams[i].content.name === newTeam) return true;
+    }
+    return false;
+  }, [teams, newTeam]);
+
   const addTeam = useCallback(() => {
-    if (newTeam.length > 0) {
+    if (newTeam.length > 0 && !newTeamExists()) {
       teams.push({
         id: `${teams.length}`,
-        content: newTeam,
-        color: generateRandomColor(),
+        content: {
+          name: newTeam,
+          color: generateRandomColor(),
+          elo: Number(newRating) || undefined,
+        },
       });
+      setNewRating(defaultRating);
       setNewTeam("");
       forceUpdate();
     }
-  }, [newTeam, teams, forceUpdate]);
+  }, [newTeam, teams, newRating, forceUpdate, defaultRating]);
 
   useEffect(() => {
     inputRef.current?.focus();
-  });
+  }, []);
+
+  useEffect(() => {
+    setNewRating(defaultRating);
+  }, [defaultRating]);
 
   useEffect(() => {
     if (enterPressed) addTeam();
   }, [enterPressed, addTeam]);
+
+  useEffect(() => {
+    if (!useElo) {
+      const newItems: TeamItem[] = [];
+      teams.forEach((team) => {
+        let t = { ...team, content: { ...team.content, elo: undefined } };
+        newItems.push(t);
+      });
+      setTeams(newItems);
+      forceUpdate();
+      setNewRating("");
+      setDefaultRating("");
+    }
+  }, [useElo]);
+
+  useEffect(() => {
+    if (useElo) {
+      const newItems: TeamItem[] = [];
+      teams.forEach((team) => {
+        let newElo: number | undefined =
+          team.content.elo || Number(defaultRating);
+        if (`${team.content.elo}` === lastDefaultRating) {
+          newElo = Number(defaultRating);
+          if (newElo === 0) newElo = undefined;
+        }
+        let t = {
+          ...team,
+          content: {
+            ...team.content,
+            elo: newElo,
+          },
+        };
+        newItems.push(t);
+      });
+      setTeams(newItems);
+      forceUpdate();
+    }
+  }, [defaultRating]);
 
   const onDragEnd = (result: any) => {
     if (!result.destination) {
@@ -74,13 +131,19 @@ const MakeBracketRoute: React.FC<{}> = () => {
 
   const onColorChange = (newColor: string, index: number) => {
     const newItems = teams;
-    newItems[index] = { ...newItems[index], color: newColor };
+    newItems[index] = {
+      ...newItems[index],
+      content: { ...newItems[index].content, color: newColor },
+    };
     setTeams(newItems);
     forceUpdate();
   };
 
   return (
     <AnimatedMountView styles={{ width: "60%", marginTop: 32 }}>
+      <div style={styles.header}>
+        <Text fontSize={20}>Create a New Bracket</Text>
+      </div>
       <div style={styles.topInput}>
         <TextInput
           _ref={inputRef as React.LegacyRef<HTMLInputElement> | undefined}
@@ -97,47 +160,37 @@ const MakeBracketRoute: React.FC<{}> = () => {
           >
             <TextInput
               icon="rating"
+              inputType="number"
               placeholderText="Rating"
-              onChangeText={() => {}}
-              // onChangeText={setNewTeam}
-              // value={newTeam}
+              onChangeText={setNewRating}
+              value={newRating}
             />
           </AnimatedMountView>
         )}
         <div style={styles.topInputButtons}>
           <Button
             text="Add"
-            disabled={newTeam.length === 0}
+            disabled={
+              useElo
+                ? newTeam.length === 0 || newRating?.length === 0
+                : newTeam.length === 0
+            }
             onClick={addTeam}
           />
           <div style={styles.spacer} />
-          <Button text="Start" disabled={teams.length < 2} />
+          <Button text="Create" disabled={teams.length < 2} />
         </div>
       </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          height: 32,
-          // backgroundColor: "red",
-        }}
-      >
+      <div style={styles.bottomInput}>
         <div style={{ display: "flex", flexDirection: "row" }}>
           <Toggle onToggleChange={(value) => setUseElo(value)} />
           <Text style={{ marginLeft: 12 }} color={colors.gray1}>
-            Use ELO Rating for seeding
+            Use ELO Rating
           </Text>
         </div>
         {useElo && (
           <AnimatedMountView
-            styles={{
-              display: "flex",
-              flexDirection: "row",
-              marginTop: -2,
-              marginLeft: 8,
-              alignItems: "center",
-            }}
+            styles={styles.defaultEloContainer}
             mountDirection="x"
             mountInitialOffset={-16}
           >
@@ -147,8 +200,10 @@ const MakeBracketRoute: React.FC<{}> = () => {
             <TextInput
               thin
               icon="rating"
+              inputType="number"
               containerStyles={{ width: 96, marginLeft: 12 }}
-              placeholderText={"Ex. 1290"}
+              placeholderText={"ex. 1290"}
+              onChangeText={setDefaultRating}
             />
           </AnimatedMountView>
         )}
@@ -168,9 +223,10 @@ const MakeBracketRoute: React.FC<{}> = () => {
                     >
                       <AnimatedMountView>
                         <TeamPreview
-                          name={item.content}
+                          name={item.content.name}
                           seed={index + 1}
-                          color={item.color}
+                          elo={item.content.elo}
+                          color={item.content.color}
                           onDelete={() => onDelete(index)}
                           onColorChange={(color) => onColorChange(color, index)}
                         />
@@ -196,6 +252,22 @@ const styles: StyleSheetCSS = {
   },
   spacer: {
     width: 24,
+  },
+  header: {
+    marginBottom: 32,
+  },
+  defaultEloContainer: {
+    display: "flex",
+    flexDirection: "row",
+    marginTop: -2,
+    marginLeft: 8,
+    alignItems: "center",
+  },
+  bottomInput: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    height: 32,
   },
   topInputButtons: {
     display: "flex",

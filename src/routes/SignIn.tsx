@@ -1,9 +1,16 @@
-import { Button, Text, TextInput } from "../components/general";
+import { Link } from "react-router-dom";
+import {
+  AnimatedMountView,
+  Button,
+  Text,
+  TextInput,
+  TouchableDiv,
+} from "../components/general";
 import colors from "../constants/Colors";
 
 const SignInRoute: React.FC<{}> = () => {
   return (
-    <div style={{ width: 256, marginTop: 32 }}>
+    <AnimatedMountView styles={{ width: 320, marginTop: 64 }}>
       <Text weight="medium" fontSize={24} style={styles.header}>
         Sign In
       </Text>
@@ -24,7 +31,7 @@ const SignInRoute: React.FC<{}> = () => {
       />
       <div style={styles.buttons}>
         <Button text="Login" />
-        <div style={styles.orContainer}>{/* <Text>OR</Text> */}</div>
+        <div style={{ height: 12 }} />
         <Button
           iconSize={18}
           icon="google"
@@ -34,7 +41,14 @@ const SignInRoute: React.FC<{}> = () => {
           containerStyles={styles.input}
         />
       </div>
-    </div>
+      <TouchableDiv style={styles.footer}>
+        <Link to="signup" style={styles.link}>
+          <Text color={colors.gray1} fontSize={12}>
+            Need an Account? Click to Sign Up
+          </Text>
+        </Link>
+      </TouchableDiv>
+    </AnimatedMountView>
   );
 };
 
@@ -48,11 +62,13 @@ const styles: StyleSheetCSS = {
   header: {
     marginBottom: 32,
   },
-  orContainer: {
-    padding: 8,
-    // display: "flex",
-    // justifyContent: "center",
-    // alignItems: "center",
+  footer: {
+    marginTop: 24,
+    display: "flex",
+    justifyContent: "center",
+  },
+  link: {
+    textDecoration: "none",
   },
 };
 

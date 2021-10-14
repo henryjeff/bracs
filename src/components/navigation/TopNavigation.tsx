@@ -113,7 +113,7 @@ const styles: StyleSheetCSS = {
     display: "flex",
   },
   navIndicator: {
-    marginTop: 4,
+    marginTop: 6,
     marginBottom: -8,
     width: "100%",
     height: 3,

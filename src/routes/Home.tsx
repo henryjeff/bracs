@@ -6,30 +6,44 @@ const HomeRoute: React.FC<{}> = () => {
     <div style={styles.page}>
       <div style={styles.header}>
         <div style={styles.logoContainer}>
-          <AnimatedMountView delay={0.1}>
+          <AnimatedMountView
+            mountInitialOffset={-32}
+            mountDirection="x"
+            delay={0.1}
+          >
             <Text weight="bold" fontSize={64}>
               {"{ "}
             </Text>
           </AnimatedMountView>
-          <AnimatedMountView delay={0.2} styles={styles.logo}>
+          <AnimatedMountView
+            mountInitialOffset={-32}
+            delay={0.2}
+            styles={styles.logo}
+          >
             <Text weight="bold" fontSize={64}>
               BrACS
             </Text>
           </AnimatedMountView>
-          <AnimatedMountView delay={0.1}>
+          <AnimatedMountView
+            mountInitialOffset={32}
+            mountDirection="x"
+            delay={0.3}
+          >
             <Text weight="bold" fontSize={64}>
               {"}"}
             </Text>
           </AnimatedMountView>
         </div>
-        <Text fontSize={24} color={colors.gray1} style={{ marginTop: 8 }}>
-          Create simple, gorgeous brackets
-        </Text>
+        <AnimatedMountView delay={0.35}>
+          <Text fontSize={24} color={colors.gray1} style={{ marginTop: 8 }}>
+            Create simple, gorgeous brackets
+          </Text>
+        </AnimatedMountView>
       </div>
-      <div style={styles.footer}>
+      <AnimatedMountView delay={0.35} styles={styles.footer}>
         <Button linkTo="/make" margin text="Make a Bracket" />
-        <Button linkTo="/login" margin text="Sign Up" />
-      </div>
+        <Button linkTo="/login" margin text="Sign In" />
+      </AnimatedMountView>
     </div>
   );
 };
