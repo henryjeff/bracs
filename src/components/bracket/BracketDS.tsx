@@ -1,8 +1,6 @@
 import { FlowElement, Elements } from "react-flow-renderer";
 import { Tree } from "./Tree";
 import colors from "../../constants/Colors";
-import { ConsoleLogger } from "@aws-amplify/core";
-import { Z_BEST_COMPRESSION } from "zlib";
 
 // import { generateRandomColor } from "../../util/randomColor";
 // export const bracket: Bracket = {
@@ -29,7 +27,7 @@ import { Z_BEST_COMPRESSION } from "zlib";
 //   },
 // };
 
-export const convertTreeToElements = (tree: Tree<Team>) => {
+export const convertTreeToElements = (tree: Tree<Team>): Elements<any> => {
   const elements: Elements<any> = [];
   // For each node in the tree, generate corresponding elements
   tree.getNodes().forEach((node) => {
@@ -72,12 +70,12 @@ export const convertTreeToElements = (tree: Tree<Team>) => {
   return elements;
 };
 
-export const convertListToElements = (
+export const convertListToTree = (
   teams: {
     name: string;
     color: string;
   }[]
-): Elements<any> => {
+): Tree<Team> => {
   // Total number of teams
   const size = teams.length;
   // Depth is the total depth of the tree
@@ -100,7 +98,6 @@ export const convertListToElements = (
   tree.constructTree(depth);
   // Generate a table of seed placements
   const placements = generateSeedPlacement(depth);
-  console.log(placements)
   // For each placement navigate to and replace value with a team
   placements.forEach((directions, index) => {
     tree.navigateAndReplace(_teams[index], directions);
@@ -108,31 +105,25 @@ export const convertListToElements = (
   // Play buy games
   tree.playBuyGames();
 
-  const elements = convertTreeToElements(tree);
-  return elements;
+  return tree;
 };
 
 const generateSeedPlacement = (depth: number): number[][] => {
-
   //base case
-  if (depth == 1) {
-    let a = [ 
-              [0,], 
-              [1,]
-            ];
+  if (depth === 1) {
+    let a = [[0], [1]];
     return a;
   } else {
-
     //recurse to get previous depth seeding directions list
     let minusDepthList = generateSeedPlacement(depth - 1);
-  
+
     //create new list with copies of previous depth
     let newList: number[][] = [];
-    minusDepthList.forEach(elem => {
+    minusDepthList.forEach((elem) => {
       newList.push([...elem]);
-    })
+    });
 
-    //combine new copied list with reveresed old list
+    //combine new copied list with reversed old list
     newList = newList.concat([...minusDepthList.reverse()]);
 
     //add 0's to the first half of sub lists and 1's to second half
@@ -143,9 +134,7 @@ const generateSeedPlacement = (depth: number): number[][] => {
         newList[i].push(1);
       }
     }
-    
+
     return newList;
   }
 };
-
-console.log(generateSeedPlacement(3));

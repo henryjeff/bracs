@@ -184,6 +184,22 @@ export class Tree<T> {
       }
     });
   }
+  findNode(id: string): TreeNode<T> | undefined {
+    let foundNode: TreeNode<T> | undefined = undefined;
+    this.getNodes().forEach((node) => {
+      if (node.id === id) {
+        foundNode = node;
+      }
+    });
+    return foundNode;
+  }
+
+  declareWinner(id: string) {
+    const node = this.findNode(id);
+    if (node && node.parent) {
+      node.parent.value = node.value;
+    }
+  }
 
   getNodes(): TreeNode<T>[] {
     const itr = this.bfs();

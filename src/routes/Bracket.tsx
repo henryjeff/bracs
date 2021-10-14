@@ -1,29 +1,37 @@
 import { useEffect, useState } from "react";
-import { Elements } from "react-flow-renderer";
 import Bracket from "../components/bracket/Bracket";
-// import { useParams } from "react-router";
-import { convertListToElements } from "../components/bracket/BracketDS";
-// import { Text } from "../components/general";
-
-console.log(process.env.API_KEY);
+import { convertListToTree } from "../components/bracket/BracketDS";
+import { Tree } from "../components/bracket/Tree";
 
 const BracketRoute: React.FC<{}> = () => {
-  // const { teams } = useParams<{ teams: Team[] }>();
-  const [elements, setElements] = useState<Elements<any>>();
+  const [tree, setTree] = useState<Tree<Team>>();
+  // const [counter, setCounter] = useState(0);
 
   useEffect(() => {
-    const e = convertListToElements([
+    const e = convertListToTree([
       { name: "Team 1", color: "#fff" },
       { name: "Team 2", color: "#fff" },
       { name: "Team 3", color: "#fff" },
     ]);
-    setElements(e);
+    setTree(e);
   }, []);
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     tree?.declareWinner("6");
+  //     setCounter(counter + 1);
+  //   }, 1000);
+
+  // }, []);
+
+  // useEffect(() => {
+  //   if (tree) setTree(tree);
+  // }, [tree]);
 
   return (
     <div style={styles.page}>
       <div style={styles.bracket}>
-        {elements && <Bracket elements={elements} />}
+        {tree && <Bracket tree={tree} forceUpdate={0} />}
       </div>
     </div>
   );

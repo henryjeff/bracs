@@ -14,12 +14,26 @@ const SignInRoute: React.FC<{}> = () => {
   return (
     <AnimatedMountView styles={{ width: 320, marginTop: 64 }}>
       <Text weight="medium" fontSize={24} style={styles.header}>
-        Sign In
+        Sign Up
       </Text>
       <TextInput
         iconSize={12}
         icon="user"
-        placeholderText="Username or Email"
+        placeholderText="Name"
+        onChangeText={() => {}}
+        containerStyles={styles.input}
+      />
+      <TextInput
+        iconSize={12}
+        icon="mail"
+        placeholderText="Email"
+        onChangeText={() => {}}
+        containerStyles={styles.input}
+      />
+      <TextInput
+        iconSize={12}
+        icon="phone"
+        placeholderText="Phone Number"
         onChangeText={() => {}}
         containerStyles={styles.input}
       />
@@ -34,7 +48,7 @@ const SignInRoute: React.FC<{}> = () => {
       <div style={styles.buttons}>
         <Button
           isLoading={isLoading}
-          text="Login"
+          text="Sign Up"
           onClick={() => setIsLoading(true)}
         />
         <div style={styles.spacer} />
@@ -48,9 +62,9 @@ const SignInRoute: React.FC<{}> = () => {
         />
       </div>
       <TouchableDiv style={styles.footer}>
-        <Link to="signup" style={styles.link}>
+        <Link to="login" style={styles.link}>
           <Text color={colors.gray1} fontSize={12}>
-            Need an Account? Click to Sign Up
+            Already have an Account? Click to Login
           </Text>
         </Link>
       </TouchableDiv>

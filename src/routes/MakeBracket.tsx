@@ -143,9 +143,11 @@ const MakeBracketRoute: React.FC<{}> = () => {
   };
 
   return (
-    <AnimatedMountView styles={{ width: "60%", marginTop: 32 }}>
+    <div style={styles.page}>
       <div style={styles.header}>
-        <Text fontSize={20}>Create a New Bracket</Text>
+        <Text weight="medium" fontSize={24}>
+          Create a New Bracket
+        </Text>
       </div>
       <div style={styles.topInput}>
         <TextInput
@@ -243,11 +245,16 @@ const MakeBracketRoute: React.FC<{}> = () => {
           )}
         </Droppable>
       </DragDropContext>
-    </AnimatedMountView>
+    </div>
   );
 };
 
 const styles: StyleSheetCSS = {
+  page: {
+    marginTop: 32,
+    // display: "flex",
+    width: "60%",
+  },
   topInput: {
     display: "flex",
     flexDirection: "row",

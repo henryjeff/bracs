@@ -15,6 +15,7 @@ export interface ButtonProps {
   iconSize?: number;
   disabled?: boolean;
   outline?: boolean;
+  dark?: boolean;
   buttonStyles?: React.CSSProperties;
   buttonHoverStyles?: React.CSSProperties;
   buttonTextProps?: TextProps;
@@ -33,6 +34,7 @@ const Button: React.FC<ButtonProps> = ({
   iconSize,
   disabled,
   outline,
+  dark,
   buttonStyles,
   buttonHoverStyles,
   buttonTextProps,
@@ -73,7 +75,8 @@ const Button: React.FC<ButtonProps> = ({
     isHovering && buttonHoverStyles,
     isActive && (outline ? styles.activeOutline : styles.active),
     padding && { paddingLeft: 4, paddingRight: 4 },
-    thin && { height: 30, paddingLeft: 20, paddingRight: 20 }
+    thin && { height: 30, paddingLeft: 20, paddingRight: 20 },
+    dark && { backgroundColor: colors.navy2 }
   );
 
   const Button = (
@@ -87,7 +90,7 @@ const Button: React.FC<ButtonProps> = ({
     >
       {isLoading ? (
         <button style={buttonStyle}>
-          <LoadingIndicator />
+          <LoadingIndicator size={12} />
         </button>
       ) : (
         <button

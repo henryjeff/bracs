@@ -5,13 +5,17 @@ import TeamNode from "./nodes/TeamNode";
 import InProgressNode from "./nodes/InProgressNode";
 import TbdNode from "./nodes/TbdNode";
 import ByeNode from "./nodes/ByeNode";
+import { Tree } from "./Tree";
+// import { convertTreeToElements } from "./BracketDS";
 
 export interface BracketProps {
-  elements: Elements<any>;
+  tree: Tree<Team>;
+  forceUpdate?: number;
 }
 
-const Bracket: React.FC<BracketProps> = ({ elements }) => {
+const Bracket: React.FC<BracketProps> = ({ tree, forceUpdate }) => {
   const [rfInstance, setRfInstance] = useState();
+  const [elements, setElements] = useState<Elements<any>>();
 
   const onLoad = useCallback((instance) => {
     instance.fitView();
@@ -25,19 +29,24 @@ const Bracket: React.FC<BracketProps> = ({ elements }) => {
     if (rfInstance) {
       //@ts-ignore
       rfInstance.fitView();
+      setElements([]);
     }
   }, [dimensions, rfInstance]);
 
+  // useEffect(() => {
+  //   setElements(convertTreeToElements(tree));
+  // }, [forceUpdate, setElements]);
+
   return (
     <div ref={ref} style={styles.container}>
-      <ReactFlow
-        onLoad={onLoad}
-        nodesDraggable={false}
-        elements={elements}
-        nodeTypes={nodeTypes}
-      >
-        {/* <Text>Tournament Name</Text> */}
-      </ReactFlow>
+      {elements && (
+        <ReactFlow
+          onLoad={onLoad}
+          // nodesDraggable={false}
+          elements={[]}
+          nodeTypes={nodeTypes}
+        />
+      )}
     </div>
   );
 };

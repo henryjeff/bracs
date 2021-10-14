@@ -6,6 +6,8 @@ import UserIcon from "./User.svg";
 import MenuIcon from "./Menu.svg";
 import KeyIcon from "./Key.svg";
 import EyeIcon from "./Eye.svg";
+import MailIcon from "./Mail.svg";
+import PhoneIcon from "./Phone.svg";
 import RatingIcon from "./Rating.svg";
 import EyeCrossIcon from "./EyeCross.svg";
 import CircleAddIcon from "./CircleAdd.svg";
@@ -15,8 +17,10 @@ const icons = {
   key: KeyIcon,
   eye: EyeIcon,
   edit: EditIcon,
+  mail: MailIcon,
   menu: MenuIcon,
   user: UserIcon,
+  phone: PhoneIcon,
   rating: RatingIcon,
   google: GoogleIcon,
   eyeCross: EyeCrossIcon,

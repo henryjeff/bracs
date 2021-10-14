@@ -7,17 +7,17 @@ const HomeRoute: React.FC<{}> = () => {
       <div style={styles.header}>
         <div style={styles.logoContainer}>
           <AnimatedMountView
-            mountInitialOffset={-32}
+            mountInitialOffset={-48}
             mountDirection="x"
-            delay={0.1}
+            delay={0.2}
           >
             <Text weight="bold" fontSize={64}>
-              {"{ "}
+              {"{"}
             </Text>
           </AnimatedMountView>
           <AnimatedMountView
             mountInitialOffset={-32}
-            delay={0.2}
+            delay={0.1}
             styles={styles.logo}
           >
             <Text weight="bold" fontSize={64}>
@@ -25,7 +25,7 @@ const HomeRoute: React.FC<{}> = () => {
             </Text>
           </AnimatedMountView>
           <AnimatedMountView
-            mountInitialOffset={32}
+            mountInitialOffset={48}
             mountDirection="x"
             delay={0.3}
           >

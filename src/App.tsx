@@ -8,6 +8,7 @@ import MakeBracketRoute from "./routes/MakeBracket";
 import BracketRoute from "./routes/Bracket";
 import HomeRoute from "./routes/Home";
 import SignInRoute from "./routes/SignIn";
+import SignUpRoute from "./routes/SignUp";
 
 import "./App.css";
 
@@ -20,6 +21,7 @@ function Routes() {
       <Switch>
         {/** Public Routes */}
         <Route exact path="/login" component={SignInRoute} />
+        <Route exact path="/signup" component={SignUpRoute} />
         <Route exact path="/" component={HomeRoute} />
         <Route exact path="/view" component={BracketRoute} />
         <Route exact path="/make" component={MakeBracketRoute} />

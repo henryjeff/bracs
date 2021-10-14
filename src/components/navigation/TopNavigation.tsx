@@ -2,7 +2,6 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import colors from "../../constants/Colors";
 import { Button, Text } from "../general";
-import BrACS from "../../assets/BrACS.svg";
 import { motion } from "framer-motion";
 import { Easing } from "../../constants/Animation";
 interface NavigationOptionProps {
@@ -59,7 +58,8 @@ const TopNavigation: React.FC<{}> = () => {
       <div style={styles.sideNav}>
         <NavigationOption to="/">
           <Text weight="bold" fontSize={24}>
-            {"{"} BrACS {"}"}
+            {/* {"{"} BrACS {"}"} */}
+            BrACS
           </Text>
           {/* <img style={styles.logo} src={BrACS} alt={""} /> */}
         </NavigationOption>
