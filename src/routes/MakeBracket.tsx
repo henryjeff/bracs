@@ -62,10 +62,11 @@ const MakeBracketRoute: React.FC<{}> = () => {
       setNewTeam("");
       forceUpdate();
     }
-  }, [newTeam, teams, newRating, forceUpdate, defaultRating]);
+  }, [newTeam, teams, newRating, forceUpdate, defaultRating, newTeamExists]);
 
   useEffect(() => {
     inputRef.current?.focus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -88,6 +89,7 @@ const MakeBracketRoute: React.FC<{}> = () => {
       setNewRating("");
       setDefaultRating("");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [useElo]);
 
   useEffect(() => {
@@ -112,6 +114,7 @@ const MakeBracketRoute: React.FC<{}> = () => {
       setTeams(newItems);
       forceUpdate();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultRating]);
 
   const onDragEnd = (result: any) => {
