@@ -95,7 +95,7 @@
 //   };
 //   return configs;
 // }
-import { config } from "../aws-exports";
+// import { config } from "../aws-exports";
 import { GraphQLClient } from "graphql-request";
 
 export function graphQL(
@@ -104,47 +104,48 @@ export function graphQL(
   resolve: (p: any) => void,
   reject: (p: any) => void
 ): Promise<any> {
-  const endpoint = config.graphqlEndpoint;
-  const graphQLClient = new GraphQLClient(endpoint, {
-    headers: {
-      "x-api-key": config.apiKey,
-      // "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE, PUT",
-      // "Access-Control-Allow-Origin": "*",
-      // "Access-Control-Allow-Headers":
-      //   "append,delete,entries,foreach,get,has,keys,set,values,Authorization",
-      // authorization: "Bearer MY_TOKEN",
-    },
-  });
-
+  // const endpoint = config.graphqlEndpoint;
+  // const graphQLClient = new GraphQLClient(endpoint, {
+  //   headers: {
+  //     "x-api-key": config.apiKey,
+  //     // "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE, PUT",
+  //     // "Access-Control-Allow-Origin": "*",
+  //     // "Access-Control-Allow-Headers":
+  //     //   "append,delete,entries,foreach,get,has,keys,set,values,Authorization",
+  //     // authorization: "Bearer MY_TOKEN",
+  //   },
+  // });
   // const variables: GetUserQueryVariables = {
   //   id: "4196f8c4-a632-43c0-81a3-016ad72cd713",
   // };
-
-  return graphQLClient
-    .request(query, variables)
-    .then((res: any) => {
-      console.log(res.data);
-      resolve(res.data);
-    })
-    .catch((err: any) => {
-      console.log(err);
-      if (err.response) {
-        // Had a token but expired, refresh it and remake intended api call
-        // if (
-        //   err.response.status === 401 &&
-        //   tokenData &&
-        //   tokenData.refreshToken
-        // ) {
-        //   //@ts-ignore
-        //   return authRefreshAccessToken(tokenData.refreshToken).then(() => {
-        //     return new Promise((r) => setTimeout(r, 500)).then(() =>
-        //       axios(configs, resolve, reject)
-        //     );
-        //   });
-        // }
-      }
-      reject(err);
-    });
+  // return graphQLClient
+  //   .request(query, variables)
+  //   .then((res: any) => {
+  //     console.log(res.data);
+  //     resolve(res.data);
+  //   })
+  //   .catch((err: any) => {
+  //     console.log(err);
+  //     if (err.response) {
+  //       // Had a token but expired, refresh it and remake intended api call
+  //       // if (
+  //       //   err.response.status === 401 &&
+  //       //   tokenData &&
+  //       //   tokenData.refreshToken
+  //       // ) {
+  //       //   //@ts-ignore
+  //       //   return authRefreshAccessToken(tokenData.refreshToken).then(() => {
+  //       //     return new Promise((r) => setTimeout(r, 500)).then(() =>
+  //       //       axios(configs, resolve, reject)
+  //       //     );
+  //       //   });
+  //       // }
+  //     }
+  //     reject(err);
+  //   });
+  return new Promise((res) => {
+    console.log(res);
+  });
 }
 
 export default graphQL;
