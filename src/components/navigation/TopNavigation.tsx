@@ -59,6 +59,7 @@ const TopNavigation: React.FC<{}> = () => {
         <NavigationOption to="/">
           <Text weight="bold" fontSize={24}>
             {"["} BrACS {"]"}
+            {/* Bracket Auto-generator [for] Community Sports */}
           </Text>
           {/* <img style={styles.logo} src={BrACS} alt={""} /> */}
         </NavigationOption>
