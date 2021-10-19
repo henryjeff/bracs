@@ -1,20 +1,15 @@
 {
-  "sampledev": {
+  "bracs": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-bracs-sampledev-144430-authRole",
-      "UnauthRoleArn": "arn:aws:iam::971431666026:role/amplify-bracs-sampledev-144430-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::971431666026:role/amplify-bracs-sampledev-144430-authRole",
+      "AuthRoleName": "amplify-bracs-bracs-201840-authRole",
+      "UnauthRoleArn": "arn:aws:iam::971431666026:role/amplify-bracs-bracs-201840-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::971431666026:role/amplify-bracs-bracs-201840-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-bracs-sampledev-144430-deployment",
-      "UnauthRoleName": "amplify-bracs-sampledev-144430-unauthRole",
-      "StackName": "amplify-bracs-sampledev-144430",
-      "StackId": "arn:aws:cloudformation:us-east-1:971431666026:stack/amplify-bracs-sampledev-144430/73728110-221e-11ec-9f77-0a3f8d258fdd",
-      "AmplifyAppId": "d25y0i5ocelkdb"
-    },
-    "categories": {
-      "auth": {
-        "bracs2e72a585": {}
-      }
+      "DeploymentBucketName": "amplify-bracs-bracs-201840-deployment",
+      "UnauthRoleName": "amplify-bracs-bracs-201840-unauthRole",
+      "StackName": "amplify-bracs-bracs-201840",
+      "StackId": "arn:aws:cloudformation:us-east-1:971431666026:stack/amplify-bracs-bracs-201840/76d27b00-2d4d-11ec-b7de-0e733181096b",
+      "AmplifyAppId": "d2mnll73k3yibs"
     }
   }
 }
