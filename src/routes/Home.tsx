@@ -12,7 +12,7 @@ const HomeRoute: React.FC<{}> = () => {
             delay={0.2}
           >
             <Text weight="bold" fontSize={64}>
-              {"{"}
+              {"["}
             </Text>
           </AnimatedMountView>
           <AnimatedMountView
@@ -30,7 +30,7 @@ const HomeRoute: React.FC<{}> = () => {
             delay={0.3}
           >
             <Text weight="bold" fontSize={64}>
-              {"}"}
+              {"]"}
             </Text>
           </AnimatedMountView>
         </div>

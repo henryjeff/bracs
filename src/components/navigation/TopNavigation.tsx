@@ -58,7 +58,7 @@ const TopNavigation: React.FC<{}> = () => {
       <div style={styles.sideNav}>
         <NavigationOption to="/">
           <Text weight="bold" fontSize={24}>
-            {"{"} BrACS {"}"}
+            {"["} BrACS {"]"}
           </Text>
           {/* <img style={styles.logo} src={BrACS} alt={""} /> */}
         </NavigationOption>
