@@ -45,6 +45,9 @@ const Bracket: React.FC<BracketProps> = ({ bracketId }) => {
     <div ref={ref} style={styles.container}>
       {elements && (
         <ReactFlow
+          maxZoom={3}
+          minZoom={0.1}
+          preventScrolling={false}
           onLoad={onLoad}
           nodesDraggable={false}
           elements={elements}

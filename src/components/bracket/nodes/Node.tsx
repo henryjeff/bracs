@@ -1,4 +1,4 @@
-import { Handle, Position } from "react-flow-renderer";
+import { Handle, Position, useStoreState } from "react-flow-renderer";
 // import { Text } from "../../general";
 import colors from "../../../constants/Colors";
 import { AnimatedMountView } from "../../general";
@@ -15,6 +15,9 @@ const Node: React.FC<NodeProps> = ({ outlined, colorStrip, children }) => {
     outlined && styles.containerOutline
   );
 
+  const [, , zoom] = useStoreState((state) => state.transform);
+  const showContent = zoom >= 0.3;
+
   return (
     <AnimatedMountView.Fade styles={styles.outerContainer}>
       <div style={nodeStyle}>
@@ -29,7 +32,21 @@ const Node: React.FC<NodeProps> = ({ outlined, colorStrip, children }) => {
             backgroundColor: colorStrip,
           })}
         />
-        <div style={styles.content}>{children}</div>
+        <div style={styles.content}>
+          {showContent ? (
+            children
+          ) : (
+            <div style={styles.placeholderContainer}>
+              <div
+                style={Object.assign(
+                  {},
+                  styles.placeholder,
+                  outlined && { backgroundColor: colors.navy1 }
+                )}
+              />
+            </div>
+          )}
+        </div>
         <Handle
           type="source"
           position={"right" as Position}
@@ -67,6 +84,16 @@ const styles: StyleSheetCSS = {
   outerContainer: {
     cursor: "pointer",
     display: "flex",
+  },
+  placeholderContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  placeholder: {
+    height: 12,
+    width: 128,
+    backgroundColor: colors.gray2,
   },
   content: {
     // justifyContent: "space-between",
