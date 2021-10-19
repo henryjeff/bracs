@@ -1,236 +1,347 @@
+import { Elements, FlowElement } from "react-flow-renderer";
+import colors from "../../constants/Colors";
+
 const LEFT = 0;
 const RIGHT = 1;
 
-export class TreeNode<T> {
-  _id: string | undefined;
-  _value: T | undefined;
-  descendants: TreeNode<T>[];
-  parent: TreeNode<T> | undefined;
+export const convertListToTree = (teams: Team[]): BracketTree<Team> => {
+  // Total number of teams
+  const size = teams.length;
+  // Depth is the total depth of the tree
+  const depth = Math.ceil(Math.log2(size));
+  // _size is the total number of teams rounded to the nearest 2^n
+  const _size = 2 ** depth;
+  // _teams is a list of _size length filled with teams and empty spots are undefined
+  const _teams: (Team | undefined)[] = [];
+  for (let i = 0; i < _size; i++)
+    _teams[i] = teams[i]
+      ? {
+          name: teams[i].name,
+          color: teams[i].color,
+          elo: teams[i].elo,
+          seed: i + 1,
+        }
+      : undefined;
+  // Initialize the tree of teams
 
-  constructor(value: T | undefined) {
-    this._id = undefined;
-    this._value = value;
-    this.descendants = [];
-    this.parent = undefined;
-  }
+  // Construct a tree with a depth of depth
+  const tree: BracketTree<Team> = constructTree(depth);
+  // Generate a table of seed placements
+  const placements = generateSeedPlacement(depth);
+  // For each placement navigate to and replace value with a team
+  placements.forEach((directions, index) => {
+    navigateAndReplace(tree, _teams[index], directions);
+  });
+  // Play bye games
+  playByeGames(tree);
 
-  get id() {
-    return this._id;
-  }
+  return tree;
+};
 
-  set id(id: string | undefined) {
-    this._id = id;
-  }
+const generateSeedPlacement = (depth: number): number[][] => {
+  //base case
+  if (depth === 1) {
+    let a = [[0], [1]];
+    return a;
+  } else {
+    //recurse to get previous depth seeding directions list
+    let minusDepthList = generateSeedPlacement(depth - 1);
 
-  get value() {
-    return this._value;
-  }
+    //create new list with copies of previous depth
+    let newList: number[][] = [];
+    minusDepthList.forEach((elem) => {
+      newList.push([...elem]);
+    });
 
-  set value(value: T | undefined) {
-    this._value = value;
-  }
+    //combine new copied list with reversed old list
+    newList = newList.concat([...minusDepthList.reverse()]);
 
-  get left() {
-    return this.descendants[LEFT];
-  }
-
-  set left(node) {
-    this.descendants[LEFT] = node;
-    if (node) {
-      node.parent = this;
+    //add 0's to the first half of sub lists and 1's to second half
+    for (let i = 0; i < newList.length; i++) {
+      if (i < newList.length / 2) {
+        newList[i].push(0);
+      } else {
+        newList[i].push(1);
+      }
     }
-  }
 
-  get right() {
-    return this.descendants[RIGHT];
+    return newList;
   }
+};
 
-  set right(node) {
-    this.descendants[RIGHT] = node;
-    if (node) {
-      node.parent = this;
-    }
+export function constructTree<T>(depth: number): BracketTree<T> {
+  let tree: BracketTree<T> = { root: {}, depth };
+  createTree<T>(tree.root, depth);
+  const itr = bfs(tree.root);
+  let n = itr.next();
+  let id = 0;
+  while (n.value) {
+    n.value.id = `${id}`;
+    n = itr.next();
+    id += 1;
   }
+  return tree;
+}
 
-  toString() {
-    return `(value: ${this._value} \t\nL: ${this.left || "-"} \t\nR: ${
-      this.right || "-"
-    })`;
+function createTree<T>(node: BracketTreeNode<T>, depth: number) {
+  if (depth === 0) {
+    const node: BracketTreeNode<T> = {};
+    return node;
+  } else {
+    const left: BracketTreeNode<T> = {};
+    const right: BracketTreeNode<T> = {};
+    node.left = left;
+    if (node.left) node.left.parent = node;
+
+    node.right = right;
+    if (node.right) node.right.parent = node;
+    createTree<T>(left, depth - 1);
+    createTree<T>(right, depth - 1);
+    return node;
   }
 }
 
-export class Tree<T> {
-  root: TreeNode<T> | undefined;
-  depth: number;
-
-  constructor() {
-    this.root = undefined;
-    this.depth = 0;
-  }
-
-  constructTree(depth: number) {
-    this.root = new TreeNode<T>(undefined);
-    this.depth = depth;
-    this.createTree(this.root, depth);
-    const itr = this.bfs();
-    let n = itr.next();
-    let id = 0;
-    while (n.value) {
-      n.value.id = `${id}`;
-      n = itr.next();
-      id += 1;
+export function navigateAndReplace<T>(
+  tree: BracketTree<T>,
+  value: T | undefined,
+  directions: number[]
+): BracketTree<T> {
+  let node = tree.root;
+  while (directions[0] > -1) {
+    const direction = directions.shift();
+    if (direction === LEFT && node && node.left) {
+      node = node.left;
+    } else if (direction === RIGHT && node && node.right) {
+      node = node.right;
     }
   }
+  if (node) node.value = value;
+  return tree;
+}
 
-  createTree(node: TreeNode<T>, depth: number) {
-    if (depth === 0) {
-      return new TreeNode<T>(undefined);
-    } else {
-      const left = new TreeNode<T>(undefined);
-      const right = new TreeNode<T>(undefined);
-      node.left = left;
-      node.right = right;
-      this.createTree(left, depth - 1);
-      this.createTree(right, depth - 1);
-      return node;
-    }
+export function getNodes<T>(tree: BracketTree<T>): BracketTreeNode<T>[] {
+  const itr = bfs(tree.root);
+  let i = itr.next();
+  const nodes = [];
+  while (i.value) {
+    nodes.push(i.value);
+    i = itr.next();
   }
+  return nodes;
+}
 
-  navigateAndReplace(value: T | undefined, directions: number[]) {
-    let node = this.root;
-    while (directions[0] > -1) {
-      const direction = directions.shift();
-      if (direction === LEFT && node) {
-        node = node.left;
-      } else if (direction === RIGHT && node) {
-        node = node.right;
-      }
+export function playByeGames<T>(tree: BracketTree<T>): BracketTree<T> {
+  getNodes<T>(tree).forEach((node) => {
+    let numChildren = 0;
+    let newVal = undefined;
+
+    if (node.left?.value) {
+      newVal = node.left.value;
+      numChildren += 1;
     }
-    if (node) node.value = value;
-  }
-
-  getType(id: string): NodeType | undefined {
-    const nodes = this.getNodes();
-    for (let i = 0; i < nodes.length; i++) {
-      const node = nodes[i];
-      if (node.id === id) {
-        let numChildren = 0;
-        node.descendants.forEach((child) => {
-          if (child.value) {
-            numChildren += 1;
-          }
-        });
-
-        let facingTeam = undefined;
-        node.parent?.descendants.forEach((child) => {
-          if (child.value && child.value !== node.value) {
-            facingTeam = child.value;
-          }
-        });
-
-        if (node.value) {
-          return "team";
-        } else if (numChildren === 2) {
-          return "inProgress";
-        } else if (facingTeam) {
-          return "buy";
-        } else {
-          return "tbd";
-        }
-      }
-    }
-  }
-
-  getPosition(id: string): { x: number; y: number } {
-    const nodes = this.getNodes();
-
-    // Total number of nodes rounded to the nearest 2^n
-    let total = 2 ** (this.depth + 1);
-
-    // Find Index of node
-    let index = 0;
-    for (let i = 0; i < nodes.length; i++) {
-      if (nodes[i].id === id) {
-        index = i;
-        break;
-      }
+    if (node.right?.value) {
+      newVal = node.right.value;
+      numChildren += 1;
     }
 
-    // If the node is a leaf, return a position
-    if (index + 1 >= Math.ceil(total / 2)) {
-      const adjustedIndex = index - Math.ceil(total / 2) + 1;
-      return { x: 0, y: 100 * adjustedIndex + 72 };
-    } else {
-      // If not recursively find child positions to average and indent
-      const node = nodes[index];
-      const left = this.getPosition(node.left.id!);
-      const right = this.getPosition(node.right.id!);
-      return { x: left.x + 396, y: (left.y + right.y) / 2 };
+    if (numChildren === 1 && newVal) {
+      node.value = newVal;
     }
-  }
+  });
+  return tree;
+}
 
-  playBuyGames() {
-    this.getNodes().forEach((node) => {
-      let numChildren = 0;
-      let newVal = undefined;
-      node.descendants.forEach((n) => {
-        if (n.value) {
-          newVal = n.value;
-          numChildren += 1;
+export function printTree<T>(tree: BracketTree<T>) {
+  getNodes<T>(tree).forEach((node) => {
+    console.log(node.id, node.value);
+  });
+}
+
+export function getType<T>(
+  tree: BracketTree<T>,
+  id: string
+): BracketNodeType | undefined {
+  const nodes = getNodes<T>(tree);
+  for (let i = 0; i < nodes.length; i++) {
+    const node = nodes[i];
+    if (node.id === id) {
+      const descendants = [];
+      if (node.left?.value) descendants.push(node.left);
+      if (node.right?.value) descendants.push(node.right);
+      const numChildren = descendants.length;
+
+      const parentDescendants = [];
+      if (node.parent?.left?.value) parentDescendants.push(node.parent.left);
+      if (node.parent?.right?.value) parentDescendants.push(node.parent.right);
+
+      let facingTeam = undefined;
+      parentDescendants.forEach((child) => {
+        if (child.value && child.value !== node.value) {
+          facingTeam = child.value;
         }
       });
-      if (numChildren === 1 && newVal) {
-        node.value = newVal;
+
+      if (node.value) {
+        return "team";
+      } else if (numChildren === 2) {
+        return "inProgress";
+      } else if (facingTeam) {
+        return "bye";
+      } else {
+        return "tbd";
       }
-    });
+    }
   }
-  findNode(id: string): TreeNode<T> | undefined {
-    let foundNode: TreeNode<T> | undefined = undefined;
-    this.getNodes().forEach((node) => {
-      if (node.id === id) {
-        foundNode = node;
-      }
-    });
-    return foundNode;
-  }
+}
 
-  declareWinner(id: string) {
-    const node = this.findNode(id);
-    if (node && node.parent) {
-      node.parent.value = node.value;
+export function getPosition<T>(
+  tree: BracketTree<T>,
+  id: string
+): { x: number; y: number } {
+  const nodes = getNodes(tree);
+
+  // Total number of nodes rounded to the nearest 2^n
+  let total = 2 ** (tree.depth + 1);
+
+  // Find Index of node
+  let index = 0;
+  for (let i = 0; i < nodes.length; i++) {
+    if (nodes[i].id === id) {
+      index = i;
+      break;
     }
   }
 
-  getNodes(): TreeNode<T>[] {
-    const itr = this.bfs();
-    let i = itr.next();
-    const nodes = [];
-    while (i.value) {
-      nodes.push(i.value);
-      i = itr.next();
-    }
-    return nodes;
+  // If the node is a leaf, return a position
+  if (index + 1 >= Math.ceil(total / 2)) {
+    const adjustedIndex = index - Math.ceil(total / 2) + 1;
+    return { x: 0, y: 96 * adjustedIndex + 72 };
+  } else {
+    // If not recursively find child positions to average and indent
+    const node = nodes[index];
+    const left = getPosition(tree, node.left!.id!);
+    const right = getPosition(tree, node.right!.id!);
+    return { x: left.x + 396, y: (left.y + right.y) / 2 };
   }
+}
 
-  printAllNodes() {
-    const itr = this.bfs();
-    let node = itr.next();
-    while (node.value) {
-      console.log(node.value._value);
-      node = itr.next();
+function* bfs<T>(root: BracketTreeNode<T>) {
+  const queue: BracketTreeNode<T>[] = [];
+  if (!root) return;
+  queue.push(root);
+
+  while (queue.length !== 0) {
+    const node = queue.shift();
+    yield node;
+    node && node.left && queue.push(node.left);
+    node && node.right && queue.push(node.right);
+  }
+}
+
+export function convertSerializedTreeToElements(tree: SerializedBracket<Team>) {
+  const elements: Elements<any> = [];
+
+  for (const id in Object.keys(tree.values)) {
+    const node = tree.values[id];
+    if (!node) continue;
+    const team = node.value;
+    const type = node.type;
+    const element = {
+      id: node.id,
+      type: type,
+      position: node.position,
+      ...(type === "team"
+        ? {
+            data: {
+              team,
+              bracketData: {
+                bracketId: "0",
+                nodeId: node.id,
+              },
+              intractable: node.parentId
+                ? tree.values[node.parentId].type === "inProgress"
+                : false,
+            },
+          }
+        : {}),
+    };
+    const parent = tree.values[node.parentId!];
+
+    if (parent) {
+      const edge = {
+        id: `${node.id}-${parent.id}`,
+        source: node.id,
+        target: parent.id,
+        type: "smoothstep",
+        animated: parent.type === "inProgress",
+        style: {
+          stroke:
+            node.value?.name === parent.value?.name && node.value?.color
+              ? node.value.color
+              : colors.navy1,
+          strokeWidth: 4,
+        },
+        isHidden:
+          // Hidden if the parent node is a team and the team name is not the
+          // current nodes team
+          parent.type === "team" && node.value?.name !== parent.value?.name,
+      };
+      elements.push(edge as FlowElement);
+    }
+    elements.push(element as FlowElement);
+  }
+  return elements;
+}
+
+export function serializeTree(
+  tree: BracketTree<Team>
+): SerializedBracket<Team> {
+  const values: {
+    [key: string]: SerializedBracketNode<Team>;
+  } = {};
+  getNodes(tree).forEach((node) => {
+    if (node.id) {
+      const serializedNode: SerializedBracketNode<Team> = {
+        id: node.id,
+        value: node.value,
+        leftId: node.left?.id,
+        rightId: node.right?.id,
+        parentId: node.parent?.id,
+        type: getType(tree, node.id) || undefined,
+        position: getPosition(tree, node.id),
+      };
+      values[node.id] = serializedNode;
+    }
+  });
+  const bracket: SerializedBracket<Team> = { root: tree.root.id!, values };
+  return bracket;
+}
+
+export function declareMatchWinner(
+  teamId: string,
+  bracket: SerializedBracket<Team>
+) {
+  const values = bracket.values;
+  const team = values[teamId];
+  if (!team || !team.parentId) return;
+  const parent = values[team.parentId];
+  values[team.parentId] = {
+    ...parent,
+    value: team.value,
+    type: "team",
+  };
+  if (parent.parentId) {
+    const pParent = values[parent.parentId];
+    if (!pParent.leftId || !pParent.rightId) return;
+    const left = values[pParent.leftId];
+    const right = values[pParent.rightId];
+    if (left.type === "team" && right.type === "team") {
+      values[parent.parentId] = {
+        ...pParent,
+        type: "inProgress",
+      };
     }
   }
-
-  *bfs() {
-    const queue: TreeNode<T>[] = [];
-    if (!this.root) return;
-    queue.push(this.root);
-
-    while (queue.length !== 0) {
-      const node = queue.shift();
-      yield node;
-      node &&
-        node.descendants.forEach((child: TreeNode<T>) => queue.push(child));
-    }
-  }
+  console.log(bracket);
+  return bracket;
 }

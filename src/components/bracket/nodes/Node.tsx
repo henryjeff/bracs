@@ -1,33 +1,22 @@
 import { Handle, Position } from "react-flow-renderer";
 // import { Text } from "../../general";
 import colors from "../../../constants/Colors";
+import { AnimatedMountView } from "../../general";
 
 export interface NodeProps {
   outlined?: boolean;
   colorStrip?: string;
-  seed?: number;
 }
 
-const Node: React.FC<NodeProps> = ({
-  outlined,
-  colorStrip,
-  seed,
-  children,
-}) => {
+const Node: React.FC<NodeProps> = ({ outlined, colorStrip, children }) => {
   const nodeStyle = Object.assign(
     {},
     styles.container,
     outlined && styles.containerOutline
-    // seed && styles.nodeSeedContainer
   );
 
   return (
-    <div style={styles.outerContainer}>
-      {/* {seed && (
-        <div style={styles.seedContainer}>
-          <Text>{seed}</Text>
-        </div>
-      )} */}
+    <AnimatedMountView.Fade styles={styles.outerContainer}>
       <div style={nodeStyle}>
         <Handle
           type="target"
@@ -48,7 +37,7 @@ const Node: React.FC<NodeProps> = ({
           style={styles.handle}
         />
       </div>
-    </div>
+    </AnimatedMountView.Fade>
   );
 };
 
@@ -58,6 +47,7 @@ const styles: StyleSheetCSS = {
     paddingLeft: 20,
     paddingRight: 20,
     borderRadius: 12,
+    // marginLeft: -24,
     minWidth: 256,
     display: "flex",
     borderWidth: 4,
@@ -68,10 +58,6 @@ const styles: StyleSheetCSS = {
   containerOutline: {
     backgroundColor: colors.navy2,
   },
-  nodeSeedContainer: {
-    borderTopLeftRadius: 0,
-    borderBottomLeftRadius: 0,
-  },
   colorStrip: {
     width: 10,
     height: 48,
@@ -81,19 +67,6 @@ const styles: StyleSheetCSS = {
   outerContainer: {
     cursor: "pointer",
     display: "flex",
-  },
-  seedContainer: {
-    flex: 1,
-    borderTopLeftRadius: 16,
-    borderBottomLeftRadius: 16,
-    backgroundColor: colors.gray2,
-    alignItems: "center",
-    width: 18,
-    justifyContent: "center",
-    display: "flex",
-  },
-  seedSpacer: {
-    width: 18,
   },
   content: {
     // justifyContent: "space-between",

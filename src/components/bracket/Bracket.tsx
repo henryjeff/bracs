@@ -5,17 +5,17 @@ import TeamNode from "./nodes/TeamNode";
 import InProgressNode from "./nodes/InProgressNode";
 import TbdNode from "./nodes/TbdNode";
 import ByeNode from "./nodes/ByeNode";
-import { Tree } from "./Tree";
-// import { convertTreeToElements } from "./BracketDS";
-
+import { convertSerializedTreeToElements } from "./Tree";
+import { useBracketSelector } from "../../store/selectors";
 export interface BracketProps {
-  tree: Tree<Team>;
-  forceUpdate?: number;
+  bracketId: string;
 }
 
-const Bracket: React.FC<BracketProps> = ({ tree, forceUpdate }) => {
+const Bracket: React.FC<BracketProps> = ({ bracketId }) => {
   const [rfInstance, setRfInstance] = useState();
   const [elements, setElements] = useState<Elements<any>>();
+
+  const bracket = useBracketSelector(bracketId);
 
   const onLoad = useCallback((instance) => {
     instance.fitView();
@@ -29,22 +29,26 @@ const Bracket: React.FC<BracketProps> = ({ tree, forceUpdate }) => {
     if (rfInstance) {
       //@ts-ignore
       rfInstance.fitView();
-      setElements([]);
     }
   }, [dimensions, rfInstance]);
 
-  // useEffect(() => {
-  //   setElements(convertTreeToElements(tree));
-  // }, [forceUpdate, setElements]);
+  useEffect(() => {
+    if (bracket) {
+      const e = convertSerializedTreeToElements(bracket.bracket);
+      setElements(e);
+    }
+  }, [bracket]);
+
+  useEffect(() => {}, [elements]);
 
   return (
     <div ref={ref} style={styles.container}>
       {elements && (
         <ReactFlow
           onLoad={onLoad}
-          // nodesDraggable={false}
-          elements={[]}
-          nodeTypes={nodeTypes}
+          nodesDraggable={false}
+          elements={elements}
+          nodeTypes={BracketNodeTypes}
         />
       )}
     </div>
@@ -59,11 +63,11 @@ const styles: StyleSheetCSS = {
   },
 };
 
-const nodeTypes = {
+const BracketNodeTypes = {
   team: TeamNode,
   inProgress: InProgressNode,
   tbd: TbdNode,
-  buy: ByeNode,
+  bye: ByeNode,
 };
 
 export default Bracket;

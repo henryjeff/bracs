@@ -1,23 +1,21 @@
 declare type RootState = {
-  Auth: AuthState;
+  auth: AuthState;
+  bracket: BracketState;
 };
 
 declare type AuthState = {
-  tokenData:
-    | {
-        accessToken: string;
-        refreshToken: string;
-      }
-    | undefined;
+  tokenData?: {
+    accessToken: string;
+    refreshToken: string;
+  };
+  userId: string;
 };
 
-// declare type BracketState = {};
-
+declare type StateAction = AuthStateAction | BracketStateAction;
 /** ----------------------------------------------------------------------------
  *     Auth
  * -----------------------------------------------------------------------------
  */
-declare type StateAction = AuthStateAction;
 
 declare type AuthStateAction =
   | AuthLoginAction
@@ -40,4 +38,31 @@ declare interface AuthLogoutAction {
 
 declare interface AuthRefreshAccessToken {
   type: typeof import("./ActionTypes").ActionType.REFRESH_TOKEN;
+}
+
+/** ----------------------------------------------------------------------------
+ *     Bracket
+ * -----------------------------------------------------------------------------
+ */
+
+declare type BracketState = {
+  brackets: {
+    [bracketId: string]: {
+      bracket: SerializedBracket<Team>;
+    };
+  };
+};
+
+declare type BracketStateAction =
+  | BracketCreateAction
+  | BracketDeclareMatchWinner;
+
+declare interface BracketCreateAction {
+  type: typeof import("./ActionTypes").ActionType.CREATE_BRACKET;
+  payload: { id: string; tree: SerializedBracket<Team> };
+}
+
+declare interface BracketDeclareMatchWinner {
+  type: typeof import("./ActionTypes").ActionType.DECLARE_MATCH_WINNER;
+  payload: { teamId: string; bracketId: string };
 }

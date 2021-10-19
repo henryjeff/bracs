@@ -3,6 +3,7 @@ import { ActionType } from "../ActionTypes";
 export function createInitialAuthState(): AuthState {
   return {
     tokenData: undefined,
+    userId: "",
   };
 }
 

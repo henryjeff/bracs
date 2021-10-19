@@ -1,14 +1,17 @@
 import { combineReducers } from "redux";
 import AuthReducer, { createInitialAuthState } from "./AuthReducer";
+import BracketReducer, { createInitialBracketState } from "./BracketReducer";
 
 export function createInitialState(): RootState {
   return {
-    Auth: createInitialAuthState(),
+    auth: createInitialAuthState(),
+    bracket: createInitialBracketState(),
   };
 }
 
 const appReducers = combineReducers<RootState, StateAction>({
-  Auth: AuthReducer,
-});
+  auth: AuthReducer,
+  bracket: BracketReducer,
+} as any);
 
 export default appReducers;

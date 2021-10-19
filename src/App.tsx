@@ -5,10 +5,11 @@ import { PersistGate } from "redux-persist/integration/react";
 import TopNavigation from "./components/navigation/TopNavigation";
 
 import MakeBracketRoute from "./routes/MakeBracket";
-import BracketRoute from "./routes/Bracket";
+import BracketRoute from "./routes/ViewBracket";
 import HomeRoute from "./routes/Home";
 import SignInRoute from "./routes/SignIn";
 import SignUpRoute from "./routes/SignUp";
+import NotFoundRoute from "./routes/NotFound";
 
 import "./App.css";
 
@@ -23,8 +24,9 @@ function Routes() {
         <Route exact path="/login" component={SignInRoute} />
         <Route exact path="/signup" component={SignUpRoute} />
         <Route exact path="/" component={HomeRoute} />
-        <Route exact path="/view" component={BracketRoute} />
+        <Route exact path="/view/:bracketId" component={BracketRoute} />
         <Route exact path="/make" component={MakeBracketRoute} />
+        <Route component={NotFoundRoute} />
       </Switch>
     </div>
   );

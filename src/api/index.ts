@@ -108,10 +108,10 @@ export function graphQL(
   const graphQLClient = new GraphQLClient(endpoint, {
     headers: {
       "x-api-key": config.apiKey,
-      "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE, PUT",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers":
-        "append,delete,entries,foreach,get,has,keys,set,values,Authorization",
+      // "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE, PUT",
+      // "Access-Control-Allow-Origin": "*",
+      // "Access-Control-Allow-Headers":
+      //   "append,delete,entries,foreach,get,has,keys,set,values,Authorization",
       // authorization: "Bearer MY_TOKEN",
     },
   });
@@ -123,9 +123,11 @@ export function graphQL(
   return graphQLClient
     .request(query, variables)
     .then((res: any) => {
+      console.log(res.data);
       resolve(res.data);
     })
     .catch((err: any) => {
+      console.log(err);
       if (err.response) {
         // Had a token but expired, refresh it and remake intended api call
         // if (

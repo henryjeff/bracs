@@ -15,7 +15,7 @@ const NavigationOption: React.FC<NavigationOptionProps> = ({
   children,
 }) => {
   const location = useLocation();
-  const isHere = `/${to}` === location.pathname;
+  const isHere = to === location.pathname;
 
   return (
     <div style={styles.navOptionContainer}>
@@ -58,19 +58,18 @@ const TopNavigation: React.FC<{}> = () => {
       <div style={styles.sideNav}>
         <NavigationOption to="/">
           <Text weight="bold" fontSize={24}>
-            {/* {"{"} BrACS {"}"} */}
-            BrACS
+            {"{"} BrACS {"}"}
           </Text>
           {/* <img style={styles.logo} src={BrACS} alt={""} /> */}
         </NavigationOption>
       </div>
       <div style={styles.centerNav}>
-        <NavigationOption to="" text="Home" />
-        <NavigationOption to="make" text="Make" />
-        <NavigationOption to="view" text="View" />
+        <NavigationOption to="/" text="Home" />
+        <NavigationOption to="/make" text="Make" />
+        {/* <NavigationOption to="view" text="View" /> */}
       </div>
       <div style={styles.sideNav}>
-        <NavigationOption to="login">
+        <NavigationOption to="/login">
           <Button text="Login" />
         </NavigationOption>
       </div>

@@ -9,14 +9,26 @@ import { Draggable, Droppable, DragDropContext } from "react-beautiful-dnd";
 import TeamPreview from "../components/view/TeamPreview";
 import { useState, useCallback, createRef, useEffect } from "react";
 import { generateRandomColor } from "../util/randomColor";
+import { useDispatch } from "react-redux";
 import usePrevious from "../hooks/usePrevious";
 import reorder from "../util/reorder";
+import { convertListToTree, serializeTree } from "../components/bracket/Tree";
+import { createBracket } from "../store/actions/BracketActions";
 import useKeyPress from "../hooks/useKeyPress";
 import colors from "../constants/Colors";
+import { useHistory } from "react-router";
 
 type TeamItem = {
   id: string;
   content: Team;
+};
+
+const convertTeamItemsToTeams = (items: TeamItem[]): Team[] => {
+  const teams: Team[] = [];
+  items.forEach((item) => {
+    teams.push(item.content);
+  });
+  return teams;
 };
 
 const getItemStyle = (draggableStyle: any) => ({
@@ -32,14 +44,21 @@ const MakeBracketRoute: React.FC<{}> = () => {
   const [newRating, setNewRating] = useState<string>("");
   const [defaultRating, setDefaultRating] = useState<string>("");
   const lastDefaultRating = usePrevious(defaultRating);
+  const dispatch = useDispatch();
+  const navigation = useHistory();
 
   const inputRef = createRef<HTMLElement>();
   const [, updateState] = useState({});
   const forceUpdate = useCallback(() => updateState({}), []);
 
   const [useElo, setUseElo] = useState(false);
-
   const enterPressed = useKeyPress("Enter");
+
+  const makeBracket = () => {
+    const tree = convertListToTree(convertTeamItemsToTeams(teams));
+    dispatch(createBracket("0", serializeTree(tree)));
+    navigation.push("/view/0");
+  };
 
   const newTeamExists = useCallback(() => {
     for (let i = 0; i < teams.length; i++) {
@@ -143,7 +162,7 @@ const MakeBracketRoute: React.FC<{}> = () => {
   };
 
   return (
-    <div style={styles.page}>
+    <AnimatedMountView styles={styles.page}>
       <div style={styles.header}>
         <Text weight="medium" fontSize={24}>
           Create a New Bracket
@@ -183,7 +202,11 @@ const MakeBracketRoute: React.FC<{}> = () => {
             onClick={addTeam}
           />
           <div style={styles.spacer} />
-          <Button text="Create" disabled={teams.length < 2} />
+          <Button
+            text="Create"
+            onClick={makeBracket}
+            disabled={teams.length < 2}
+          />
         </div>
       </div>
       <div style={styles.bottomInput}>
@@ -245,7 +268,7 @@ const MakeBracketRoute: React.FC<{}> = () => {
           )}
         </Droppable>
       </DragDropContext>
-    </div>
+    </AnimatedMountView>
   );
 };
 

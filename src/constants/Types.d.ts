@@ -2,14 +2,27 @@ declare interface StyleSheetCSS {
   [key: string]: React.CSSProperties;
 }
 
-interface Bracket {
+interface SerializedBracket<T> {
   root: string;
-  matches: {
-    [key: string]: Match;
+  values: {
+    [key: string]: SerializedBracketNode<T>;
   };
 }
 
-type NodeType = "team" | "buy" | "tbd" | "inProgress";
+interface SerializedBracketNode<T> {
+  id?: string;
+  value?: T;
+  leftId?: string;
+  rightId?: string;
+  parentId?: string;
+  type?: BracketNodeType;
+  position?: BracketPosition;
+}
+
+interface BracketPosition {
+  x: number;
+  y: number;
+}
 
 interface Match {
   id: string;
@@ -19,10 +32,26 @@ interface Match {
   winner?: Team;
   gameNext?: string;
 }
+
+declare interface BracketTree<T> {
+  root: BracketTreeNode<T>;
+  depth: number;
+}
+
+declare interface BracketTreeNode<T> {
+  id?: string;
+  value?: T;
+  left?: BracketTreeNode<T>;
+  right?: BracketTreeNode<T>;
+  parent?: BracketTreeNode<T>;
+}
+
+type BracketNodeType = "team" | "bye" | "tbd" | "inProgress";
 interface Team {
   name: string;
   elo?: number;
   color?: string;
+  seed?: number;
 }
 
 interface BracketNodeElement {
