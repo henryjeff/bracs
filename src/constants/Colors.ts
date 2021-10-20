@@ -4,6 +4,7 @@ const colors = {
   gray1: "#8E8D95", // lightest gray
   gray2: "#383A4A",
   white: "#FFFFFF",
+  red: "#F4216A",
 } as const;
 
 export type ColorName = keyof typeof colors;

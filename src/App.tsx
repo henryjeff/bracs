@@ -10,6 +10,7 @@ import HomeRoute from "./routes/Home";
 import SignInRoute from "./routes/SignIn";
 import SignUpRoute from "./routes/SignUp";
 import NotFoundRoute from "./routes/NotFound";
+import ButtonPartyRoute from "./routes/Secret";
 
 import "./App.css";
 
@@ -26,6 +27,7 @@ function Routes() {
         <Route exact path="/" component={HomeRoute} />
         <Route exact path="/view/:bracketId" component={BracketRoute} />
         <Route exact path="/make" component={MakeBracketRoute} />
+        <Route exact path="/buttonparty" component={ButtonPartyRoute} />
         <Route component={NotFoundRoute} />
       </Switch>
     </div>
