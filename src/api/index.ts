@@ -95,7 +95,7 @@
 //   };
 //   return configs;
 // }
-import { config } from "../../aws-exports";
+import { config } from "../aws-exports";
 import { GraphQLClient } from "graphql-request";
 
 export function graphQL(
