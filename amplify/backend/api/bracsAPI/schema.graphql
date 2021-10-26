@@ -17,8 +17,7 @@ type Game @model {
   id: ID!
   name: String!
   date: AWSTimestamp!
-  rTeam: Team @connection(fields: ["id"])
-  lTeam: Team @connection(fields: ["id"])
+  team: Team @connection(fields: ["id"])
   rGame: Game @connection(fields: ["id"])
   lGame: Game @connection(fields: ["id"])
 }
