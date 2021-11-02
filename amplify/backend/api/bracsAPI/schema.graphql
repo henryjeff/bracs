@@ -16,8 +16,9 @@ type Bracket @model {
 type Game @model {
   id: ID!
   name: String!
-  date: AWSTimestamp!
+  date: AWSTimestamp
   team: Team @connection(fields: ["id"])
+  parent: Game @connection(fields: ["id"])
   rGame: Game @connection(fields: ["id"])
   lGame: Game @connection(fields: ["id"])
 }

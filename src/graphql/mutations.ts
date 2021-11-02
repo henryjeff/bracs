@@ -62,36 +62,6 @@ export const createBracket = /* GraphQL */ `
         id
         name
         date
-        rTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        lTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        rGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        lGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -121,36 +91,6 @@ export const updateBracket = /* GraphQL */ `
         id
         name
         date
-        rTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        lTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        rGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        lGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -180,36 +120,6 @@ export const deleteBracket = /* GraphQL */ `
         id
         name
         date
-        rTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        lTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        rGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        lGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -236,15 +146,7 @@ export const createGame = /* GraphQL */ `
       id
       name
       date
-      rTeam {
-        id
-        name
-        image
-        elo
-        createdAt
-        updatedAt
-      }
-      lTeam {
+      team {
         id
         name
         image
@@ -256,36 +158,6 @@ export const createGame = /* GraphQL */ `
         id
         name
         date
-        rTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        lTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        rGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        lGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -293,36 +165,6 @@ export const createGame = /* GraphQL */ `
         id
         name
         date
-        rTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        lTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        rGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        lGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -340,15 +182,7 @@ export const updateGame = /* GraphQL */ `
       id
       name
       date
-      rTeam {
-        id
-        name
-        image
-        elo
-        createdAt
-        updatedAt
-      }
-      lTeam {
+      team {
         id
         name
         image
@@ -360,36 +194,6 @@ export const updateGame = /* GraphQL */ `
         id
         name
         date
-        rTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        lTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        rGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        lGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -397,36 +201,6 @@ export const updateGame = /* GraphQL */ `
         id
         name
         date
-        rTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        lTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        rGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        lGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -444,15 +218,7 @@ export const deleteGame = /* GraphQL */ `
       id
       name
       date
-      rTeam {
-        id
-        name
-        image
-        elo
-        createdAt
-        updatedAt
-      }
-      lTeam {
+      team {
         id
         name
         image
@@ -464,36 +230,6 @@ export const deleteGame = /* GraphQL */ `
         id
         name
         date
-        rTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        lTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        rGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        lGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -501,36 +237,6 @@ export const deleteGame = /* GraphQL */ `
         id
         name
         date
-        rTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        lTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        rGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        lGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -708,22 +414,6 @@ export const createUserInBracket = /* GraphQL */ `
       bracket {
         id
         name
-        head {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        owner {
-          id
-          name
-          email
-          phone
-          password
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -757,22 +447,6 @@ export const updateUserInBracket = /* GraphQL */ `
       bracket {
         id
         name
-        head {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        owner {
-          id
-          name
-          email
-          phone
-          password
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -806,22 +480,6 @@ export const deleteUserInBracket = /* GraphQL */ `
       bracket {
         id
         name
-        head {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        owner {
-          id
-          name
-          email
-          phone
-          password
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }

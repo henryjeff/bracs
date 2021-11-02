@@ -50,36 +50,6 @@ export const onCreateBracket = /* GraphQL */ `
         id
         name
         date
-        rTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        lTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        rGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        lGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -106,36 +76,6 @@ export const onUpdateBracket = /* GraphQL */ `
         id
         name
         date
-        rTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        lTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        rGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        lGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -162,36 +102,6 @@ export const onDeleteBracket = /* GraphQL */ `
         id
         name
         date
-        rTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        lTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        rGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        lGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -235,36 +145,6 @@ export const onCreateGame = /* GraphQL */ `
         id
         name
         date
-        rTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        lTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        rGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        lGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -272,36 +152,6 @@ export const onCreateGame = /* GraphQL */ `
         id
         name
         date
-        rTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        lTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        rGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        lGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -336,36 +186,6 @@ export const onUpdateGame = /* GraphQL */ `
         id
         name
         date
-        rTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        lTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        rGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        lGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -373,36 +193,6 @@ export const onUpdateGame = /* GraphQL */ `
         id
         name
         date
-        rTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        lTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        rGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        lGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -437,36 +227,6 @@ export const onDeleteGame = /* GraphQL */ `
         id
         name
         date
-        rTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        lTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        rGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        lGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -474,36 +234,6 @@ export const onDeleteGame = /* GraphQL */ `
         id
         name
         date
-        rTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        lTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        rGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        lGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -660,22 +390,6 @@ export const onCreateUserInBracket = /* GraphQL */ `
       bracket {
         id
         name
-        head {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        owner {
-          id
-          name
-          email
-          phone
-          password
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -706,22 +420,6 @@ export const onUpdateUserInBracket = /* GraphQL */ `
       bracket {
         id
         name
-        head {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        owner {
-          id
-          name
-          email
-          phone
-          password
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -752,22 +450,6 @@ export const onDeleteUserInBracket = /* GraphQL */ `
       bracket {
         id
         name
-        head {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        owner {
-          id
-          name
-          email
-          phone
-          password
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }

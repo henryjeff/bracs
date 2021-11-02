@@ -44,36 +44,6 @@ export const getBracket = /* GraphQL */ `
         id
         name
         date
-        rTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        lTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        rGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        lGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -101,22 +71,6 @@ export const listBrackets = /* GraphQL */ `
       items {
         id
         name
-        head {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        owner {
-          id
-          name
-          email
-          phone
-          password
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -150,36 +104,6 @@ export const getGame = /* GraphQL */ `
         id
         name
         date
-        rTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        lTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        rGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        lGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -187,36 +111,6 @@ export const getGame = /* GraphQL */ `
         id
         name
         date
-        rTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        lTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        rGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        lGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -236,36 +130,6 @@ export const listGames = /* GraphQL */ `
         id
         name
         date
-        rTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        lTeam {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        rGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        lGame {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -345,29 +209,6 @@ export const listUserOnTeams = /* GraphQL */ `
     listUserOnTeams(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        user {
-          id
-          name
-          email
-          phone
-          password
-          createdAt
-          updatedAt
-        }
-        team {
-          id
-          name
-          image
-          elo
-          createdAt
-          updatedAt
-        }
-        role {
-          id
-          desc
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -391,22 +232,6 @@ export const getUserInBracket = /* GraphQL */ `
       bracket {
         id
         name
-        head {
-          id
-          name
-          date
-          createdAt
-          updatedAt
-        }
-        owner {
-          id
-          name
-          email
-          phone
-          password
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -430,27 +255,6 @@ export const listUserInBrackets = /* GraphQL */ `
     listUserInBrackets(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        user {
-          id
-          name
-          email
-          phone
-          password
-          createdAt
-          updatedAt
-        }
-        bracket {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        role {
-          id
-          desc
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
