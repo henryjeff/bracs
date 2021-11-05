@@ -8,28 +8,28 @@ import {
   TouchableDiv,
 } from "../components/general";
 import colors from "../constants/Colors";
-import graphQL from "../api/index";
-import { createUser } from "../graphql/mutations";
-import * as APIt from "../API";
+// import graphQL from "../api/index";
+// import { createUser } from "../graphql/mutations";
+// import * as APIt from "../API";
 
 const SignInRoute: React.FC<{}> = () => {
-  const vars: APIt.CreateUserMutationVariables = {
-    // id: "4196f8c4-a632-43c0-81a3-016ad72cd713",
-    input: {
-      name: "Henry",
-      email: "henry@gmail.com",
-      password: "password",
-    },
-  };
+  // const vars: APIt.CreateUserMutationVariables = {
+  //   // id: "4196f8c4-a632-43c0-81a3-016ad72cd713",
+  //   input: {
+  //     name: "Henry",
+  //     email: "henry@gmail.com",
+  //     password: "password",
+  //   },
+  // };
 
-  graphQL(
-    createUser,
-    vars,
-    (data) => {
-      console.log(data);
-    },
-    () => {}
-  );
+  // graphQL(
+  //   createUser,
+  //   vars,
+  //   (data) => {
+  //     console.log(data);
+  //   },
+  //   () => {}
+  // );
   const [isLoading, setIsLoading] = useState(false);
   return (
     <AnimatedMountView styles={{ width: 320, marginTop: 64 }}>

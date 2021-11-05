@@ -1,17 +1,19 @@
-import {APIController} from './APIController';
+// import {APIController} from './APIController';
 
 
-export class Endpoints {
+// export class Endpoints {
     
-    CreateBracket(bracket : SerializedBracket<Team>) {
+//     CreateBracket(bracket : SerializedBracket<Team>) {
 
-        let root = bracket.root;
-        return;
-
-
+//         let root = bracket.root;
+//         return;
 
 
-            // APIController.createBracketHead
-    }
 
-}
+
+//             // APIController.createBracketHead
+//     }
+
+// }
+
+export default {} as any;
