@@ -40,7 +40,7 @@
     "ws": "^3.3.1"
   },
   "scripts": {
-    "start": "react-scripts build ; node src/express/index.js",
+    "start": "node src/express/index.js",
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -65,9 +65,13 @@
     ]
   },
   "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "@babel/node": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
     "@types/lodash": "^4.14.175",
     "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-router-dom": "^5.3.1",
-    "nodemon": "^2.0.14"
+    "nodemon": "^2.0.15"
   }
 }
