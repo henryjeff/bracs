@@ -40,7 +40,7 @@
     "ws": "^3.3.1"
   },
   "scripts": {
-    "start": "react-scripts build ; node src/index.js",
+    "start": "react-scripts build ; node src/express/index.js",
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
