@@ -11,7 +11,7 @@ const HomeRoute: React.FC<{}> = () => {
             mountDirection="x"
             delay={0.2}
           >
-            <Text weight="bold" fontSize={64}>
+            <Text weight="bold" mono fontSize={64}>
               {"["}
             </Text>
           </AnimatedMountView>
@@ -20,7 +20,7 @@ const HomeRoute: React.FC<{}> = () => {
             delay={0.1}
             styles={styles.logo}
           >
-            <Text weight="bold" fontSize={64}>
+            <Text weight="bold" mono fontSize={64}>
               BrACS
             </Text>
           </AnimatedMountView>
@@ -29,7 +29,7 @@ const HomeRoute: React.FC<{}> = () => {
             mountDirection="x"
             delay={0.3}
           >
-            <Text weight="bold" fontSize={64}>
+            <Text weight="bold" mono fontSize={64}>
               {"]"}
             </Text>
           </AnimatedMountView>
@@ -72,8 +72,8 @@ const styles: StyleSheetCSS = {
     marginTop: 32,
   },
   logo: {
-    marginLeft: 12,
-    marginRight: 12,
+    // marginLeft: 12,
+    // marginRight: 12,
   },
 };
 

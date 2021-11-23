@@ -69,9 +69,9 @@ const styles: StyleSheetCSS = {
     paddingRight: 8,
   },
   mono: {
-    fontWeight: "lighter",
+    fontWeight: 600,
     letterSpacing: 1.5,
-    fontFamily: "monospace",
+    fontFamily: "courier-prime",
   },
   noSelect: {
     userSelect: "none",

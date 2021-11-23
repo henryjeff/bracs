@@ -4,7 +4,7 @@ declare interface StyleSheet {
   [key: string]: React.CSSProperties;
 }
 
-export type FontWeights = "regular" | "medium" | "bold" | "black";
+export type FontWeights = "regular" | "medium" | "bold" | "console";
 
 /*
   Font info:
@@ -44,4 +44,14 @@ export const FontStyle: { [key in FontWeights]: StyleSheet } = {
     //@ts-ignore
     letterSpacing: 0.1,
   },
+  console: {
+    //@ts-ignore
+    fontFamily: "mono",
+    //@ts-ignore
+    fontWeight: 600,
+    //@ts-ignore
+    fontStyle: "normal",
+    //@ts-ignore
+    letterSpacing: 0.1,
+  }
 };
