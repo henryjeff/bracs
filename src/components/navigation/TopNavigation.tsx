@@ -74,7 +74,7 @@ const textVariants = {
 const Logo: React.FC<{}> = () => {
   const { isHovering, onHover, onLeave } = useHover();
   const transition = {
-    duration: 0.5,
+    duration: 0.8,
     ease: Easing.expOut,
   };
 
