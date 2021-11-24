@@ -4,6 +4,7 @@ import colors from "../../constants/Colors";
 import { Button, Text } from "../general";
 import { motion } from "framer-motion";
 import { Easing } from "../../constants/Animation";
+import useHover from "../../hooks/useHover";
 interface NavigationOptionProps {
   to: string;
   text?: string;
@@ -21,7 +22,13 @@ const NavigationOption: React.FC<NavigationOptionProps> = ({
     <div style={styles.navOptionContainer}>
       <Link to={to} style={styles.link}>
         {text && (
-          <div>
+          <div
+            style={{
+              alignItems: "center",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
             <Text
               weight="medium"
               color={isHere ? colors.white : colors.gray2}
@@ -35,7 +42,7 @@ const NavigationOption: React.FC<NavigationOptionProps> = ({
               animate={isHere ? "here" : "hide"}
               variants={indicatorVariants}
               transition={{
-                duration: 0.3,
+                duration: 0.4,
                 ease: Easing.expOut,
               }}
             />
@@ -52,14 +59,74 @@ const indicatorVariants = {
   hide: { scaleX: 0, opacity: 0.5 },
 };
 
+const logoVariants = (value: number) => {
+  return {
+    hover: { translateX: value, scale: 1.2, opacity: 0.7 },
+    none: { translateX: 0, opacity: 1 },
+  };
+};
+
+const textVariants = {
+  hover: { scale: 0.9, opacity: 0.7 },
+  none: { scale: 1 },
+};
+
+const Logo: React.FC<{}> = () => {
+  const { isHovering, onHover, onLeave } = useHover();
+  const transition = {
+    duration: 0.5,
+    ease: Easing.expOut,
+  };
+
+  return (
+    <div
+      onMouseEnter={onHover}
+      onMouseLeave={onLeave}
+      style={styles.logoContainer}
+    >
+      <motion.div
+        initial={false}
+        // style={styles.bracket}
+        animate={isHovering ? "hover" : "none"}
+        variants={logoVariants(-4)}
+        transition={transition}
+      >
+        <Text weight="bold" mono fontSize={24}>
+          [
+        </Text>
+      </motion.div>
+      <motion.div
+        initial={false}
+        // style={styles.bracket}
+        animate={isHovering ? "hover" : "none"}
+        variants={textVariants}
+        transition={transition}
+      >
+        <Text weight="bold" mono fontSize={24}>
+          BrACS
+        </Text>
+      </motion.div>
+      <motion.div
+        initial={false}
+        // style={styles.bracket}
+        animate={isHovering ? "hover" : "none"}
+        variants={logoVariants(4)}
+        transition={transition}
+      >
+        <Text weight="bold" mono fontSize={24}>
+          ]
+        </Text>
+      </motion.div>
+    </div>
+  );
+};
+
 const TopNavigation: React.FC<{}> = () => {
   return (
     <div className="topNavigation" style={styles.container}>
       <div style={styles.sideNav}>
         <NavigationOption to="/">
-          <Text weight="bold" mono fontSize={24}>
-            {"[BrACS]"}
-          </Text>
+          <Logo />
         </NavigationOption>
       </div>
       <div style={styles.centerNav}>
@@ -86,13 +153,15 @@ const styles: StyleSheetCSS = {
     borderStyle: "solid",
     display: "flex",
   },
+  logoContainer: {
+    display: "flex",
+  },
   link: {
     padding: 32,
     textDecoration: "none",
   },
   logo: { height: 36 },
   navOptionContainer: {
-    // backgroundColor: "red",
     marginLeft: 12,
     marginRight: 12,
     display: "flex",
@@ -113,7 +182,8 @@ const styles: StyleSheetCSS = {
   navIndicator: {
     marginTop: 6,
     marginBottom: -8,
-    width: "100%",
+    width: 64,
+    justifyContent: "center",
     height: 3,
     backgroundColor: colors.white,
   },
