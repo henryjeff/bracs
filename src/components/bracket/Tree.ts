@@ -1,5 +1,6 @@
 import { Elements, FlowElement } from "react-flow-renderer";
 import colors from "../../constants/Colors";
+import { playGame } from "../../util/eloUtil";
 
 const LEFT = 0;
 const RIGHT = 1;
@@ -324,7 +325,15 @@ export function declareMatchWinner(
   const values = bracket.values;
   const team = values[teamId];
   if (!team || !team.parentId) return;
+  
   const parent = values[team.parentId];
+  const sisterTeam = values[parent.leftId === teamId ? parent.rightId! : parent.leftId!]
+  if(team.value && team.value?.elo && sisterTeam.value?.elo) {
+    const newElo = playGame(team.value.elo, sisterTeam.value.elo, true)
+    team.value.elo = newElo[0]
+    sisterTeam.value.elo = newElo[1]
+
+  }
   values[team.parentId] = {
     ...parent,
     value: team.value,
@@ -342,6 +351,6 @@ export function declareMatchWinner(
       };
     }
   }
-  console.log(bracket);
+  // console.log(bracket);
   return bracket;
 }

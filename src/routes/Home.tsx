@@ -2,6 +2,7 @@ import { AnimatedMountView, Button, Text } from "../components/general";
 import colors from "../constants/Colors";
 
 const HomeRoute: React.FC<{}> = () => {
+
   return (
     <div style={styles.page}>
       <div style={styles.header}>
