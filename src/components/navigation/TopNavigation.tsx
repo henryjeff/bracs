@@ -132,7 +132,7 @@ const TopNavigation: React.FC<{}> = () => {
       <div style={styles.centerNav}>
         <NavigationOption to="/" text="Home" />
         <NavigationOption to="/make" text="Make" />
-        {/* <NavigationOption to="view" text="View" /> */}
+        <NavigationOption to="/about" text="About" />
       </div>
       <div style={styles.sideNav}>
         <NavigationOption to="/login">
@@ -180,7 +180,7 @@ const styles: StyleSheetCSS = {
     display: "flex",
   },
   navIndicator: {
-    marginTop: 6,
+    marginTop: 8,
     marginBottom: -8,
     width: 64,
     justifyContent: "center",

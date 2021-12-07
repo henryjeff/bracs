@@ -38,13 +38,13 @@ const Text: React.FC<TextProps> = (props) => {
     fontSize && { fontSize: fontSize },
     color ? { color: color } : noColor ? {} : { color: colors.white },
     weight && { ...FontStyle[weight] },
+    mono && styles.mono,
     verticalPadding && { ...styles.verticalPadding },
     horizontalPadding && { ...styles.horizontalPadding },
-    letterSpacing && { letterSpacing: letterSpacing },
     textWrap && { whiteSpace: "wrap" },
     lineHeight && { lineHeight: lineHeight },
     noSelect && styles.noSelect,
-    mono && styles.mono,
+    letterSpacing && { letterSpacing: letterSpacing },
     props.style
   );
 
@@ -57,6 +57,7 @@ const styles: StyleSheetCSS = {
     fontSize: 14,
     whiteSpace: "nowrap",
     textOverflow: "ellipsis",
+    textDecoration: "none",
     overflow: "hidden",
     ...FontStyle.regular,
   },
@@ -69,7 +70,6 @@ const styles: StyleSheetCSS = {
     paddingRight: 8,
   },
   mono: {
-    fontWeight: 600,
     letterSpacing: 1.5,
     fontFamily: "courier-prime",
   },

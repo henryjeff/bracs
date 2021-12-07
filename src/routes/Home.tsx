@@ -2,7 +2,6 @@ import { AnimatedMountView, Button, Text } from "../components/general";
 import colors from "../constants/Colors";
 
 const HomeRoute: React.FC<{}> = () => {
-
   return (
     <div style={styles.page}>
       <div style={styles.header}>
@@ -10,16 +9,18 @@ const HomeRoute: React.FC<{}> = () => {
           <AnimatedMountView
             mountInitialOffset={-48}
             mountDirection="x"
-            delay={0.2}
+            duration={0.7}
+            delay={0.1}
           >
             <Text weight="bold" mono fontSize={64}>
               {"["}
             </Text>
           </AnimatedMountView>
           <AnimatedMountView
-            mountInitialOffset={-32}
-            delay={0.1}
+            mountInitialOffset={16}
             styles={styles.logo}
+            duration={0.7}
+            delay={0.1}
           >
             <Text weight="bold" mono fontSize={64}>
               BrACS
@@ -28,20 +29,21 @@ const HomeRoute: React.FC<{}> = () => {
           <AnimatedMountView
             mountInitialOffset={48}
             mountDirection="x"
-            delay={0.3}
+            duration={0.7}
+            delay={0.1}
           >
             <Text weight="bold" mono fontSize={64}>
               {"]"}
             </Text>
           </AnimatedMountView>
         </div>
-        <AnimatedMountView delay={0.35}>
+        <AnimatedMountView delay={0.3}>
           <Text fontSize={24} color={colors.gray1} style={{ marginTop: 8 }}>
             Create simple, gorgeous brackets
           </Text>
         </AnimatedMountView>
       </div>
-      <AnimatedMountView delay={0.35} styles={styles.footer}>
+      <AnimatedMountView delay={0.4} styles={styles.footer}>
         <Button linkTo="/make" margin text="Make a Bracket" />
         <Button linkTo="/login" margin text="Sign In" />
       </AnimatedMountView>

@@ -230,7 +230,7 @@ const MakeBracketRoute: React.FC<{}> = () => {
               icon="rating"
               inputType="number"
               containerStyles={{ width: 96, marginLeft: 12 }}
-              placeholderText={"ex. 1290"}
+              placeholderText={"ex. 400"}
               onChangeText={setDefaultRating}
             />
           </AnimatedMountView>

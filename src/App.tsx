@@ -7,6 +7,7 @@ import TopNavigation from "./components/navigation/TopNavigation";
 import MakeBracketRoute from "./routes/MakeBracket";
 import BracketRoute from "./routes/ViewBracket";
 import HomeRoute from "./routes/Home";
+import AboutRoute from "./routes/About";
 import SignInRoute from "./routes/SignIn";
 import SignUpRoute from "./routes/SignUp";
 import NotFoundRoute from "./routes/NotFound";
@@ -25,6 +26,7 @@ function Routes() {
         <Route exact path="/login" component={SignInRoute} />
         <Route exact path="/signup" component={SignUpRoute} />
         <Route exact path="/" component={HomeRoute} />
+        <Route exact path="/about" component={AboutRoute} />
         <Route exact path="/view/:bracketId" component={BracketRoute} />
         <Route exact path="/make" component={MakeBracketRoute} />
         <Route exact path="/buttonparty" component={ButtonPartyRoute} />
