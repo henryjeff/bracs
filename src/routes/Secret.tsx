@@ -55,9 +55,9 @@ const Secret: React.FC<{}> = () => {
             </AnimatedMountView>
           ) : (
             <AnimatedMountView key="button">
-              <Text weight="bold" fontSize={36}>
+              {/* <Text weight="bold" fontSize={36}>
                 Button
-              </Text>
+              </Text> */}
             </AnimatedMountView>
           )}
         </div>

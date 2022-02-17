@@ -1,14 +1,19 @@
 import Bracket from "../components/bracket/Bracket";
+import BracketControls from "../components/bracket/BracketControls";
 import { AnimatedMountView } from "../components/general";
+import { ReactFlowProvider } from "react-flow-renderer";
 import { useParams } from "react-router";
 
 const BracketRoute: React.FC<{}> = () => {
   const { bracketId } = useParams<{ bracketId: string }>();
 
   return (
-    <div style={styles.page}>
-      <AnimatedMountView styles={styles.bracket}>
-        {bracketId && <Bracket bracketId={bracketId} />}
+    <div className="bracket-page" style={styles.page}>
+      <BracketControls bracketId={bracketId} />
+      <AnimatedMountView className="bracket-container" styles={styles.bracket}>
+        <ReactFlowProvider>
+          {bracketId && <Bracket bracketId={bracketId} />}
+        </ReactFlowProvider>
       </AnimatedMountView>
     </div>
   );
@@ -16,14 +21,10 @@ const BracketRoute: React.FC<{}> = () => {
 
 const styles: StyleSheetCSS = {
   bracket: {
-    height: "80vh",
-    width: "80%",
+    width: "100%",
   },
   page: {
     flex: 1,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
   },
 };
 

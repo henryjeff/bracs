@@ -9,7 +9,7 @@ const HomeRoute: React.FC<{}> = () => {
           <AnimatedMountView
             mountInitialOffset={-48}
             mountDirection="x"
-            duration={0.7}
+            duration={1}
             delay={0.1}
           >
             <Text weight="bold" mono fontSize={64}>
@@ -19,7 +19,7 @@ const HomeRoute: React.FC<{}> = () => {
           <AnimatedMountView
             mountInitialOffset={16}
             styles={styles.logo}
-            duration={0.7}
+            duration={1}
             delay={0.1}
           >
             <Text weight="bold" mono fontSize={64}>
@@ -29,7 +29,7 @@ const HomeRoute: React.FC<{}> = () => {
           <AnimatedMountView
             mountInitialOffset={48}
             mountDirection="x"
-            duration={0.7}
+            duration={1}
             delay={0.1}
           >
             <Text weight="bold" mono fontSize={64}>
@@ -37,13 +37,13 @@ const HomeRoute: React.FC<{}> = () => {
             </Text>
           </AnimatedMountView>
         </div>
-        <AnimatedMountView delay={0.3}>
+        <AnimatedMountView delay={0.3} duration={0.8}>
           <Text fontSize={24} color={colors.gray1} style={{ marginTop: 8 }}>
             Create simple, gorgeous brackets
           </Text>
         </AnimatedMountView>
       </div>
-      <AnimatedMountView delay={0.4} styles={styles.footer}>
+      <AnimatedMountView delay={0.4} styles={styles.footer} duration={0.8}>
         <Button linkTo="/make" margin text="Make a Bracket" />
         <Button linkTo="/login" margin text="Sign In" />
       </AnimatedMountView>

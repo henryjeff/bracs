@@ -8,29 +8,14 @@ import {
   TouchableDiv,
 } from "../components/general";
 import colors from "../constants/Colors";
-// import graphQL from "../api/index";
-// import { createUser } from "../graphql/mutations";
-// import * as APIt from "../API";
+import useLogin from "../hooks/useLogin";
 
 const SignInRoute: React.FC<{}> = () => {
-  // const vars: APIt.CreateUserMutationVariables = {
-  //   // id: "4196f8c4-a632-43c0-81a3-016ad72cd713",
-  //   input: {
-  //     name: "Henry",
-  //     email: "henry@gmail.com",
-  //     password: "password",
-  //   },
-  // };
+  const [identifier, setIdentifier] = useState("");
+  const [password, setPassword] = useState("");
 
-  // graphQL(
-  //   createUser,
-  //   vars,
-  //   (data) => {
-  //     console.log(data);
-  //   },
-  //   () => {}
-  // );
-  const [isLoading, setIsLoading] = useState(false);
+  const { error, login, isLoading } = useLogin({ identifier, password });
+
   return (
     <AnimatedMountView styles={{ width: 320, marginTop: 64 }}>
       <Text weight="medium" fontSize={24} style={styles.header}>
@@ -40,32 +25,35 @@ const SignInRoute: React.FC<{}> = () => {
         iconSize={12}
         icon="user"
         placeholderText="Username or Email"
-        onChangeText={() => {}}
+        onChangeText={setIdentifier}
         containerStyles={styles.input}
       />
       <TextInput
         icon="key"
         inputType="password"
         placeholderText="Password"
-        onChangeText={() => {}}
+        onChangeText={setPassword}
         showContentToggle
         containerStyles={styles.input}
       />
       <div style={styles.buttons}>
-        <Button
-          isLoading={isLoading}
-          text="Login"
-          onClick={() => setIsLoading(true)}
-        />
-        <div style={styles.spacer} />
-        <Button
+        <Button isLoading={isLoading} text="Login" onClick={login} />
+        {error && (
+          <AnimatedMountView styles={styles.errors}>
+            <Text color={colors.red} fontSize={14} style={styles.error}>
+              {error}
+            </Text>
+          </AnimatedMountView>
+        )}
+        {/* <div style={styles.spacer} /> */}
+        {/* <Button
           iconSize={18}
           icon="google"
           text="Continue with Google"
           buttonTextProps={{ color: colors.navy1 }}
           buttonStyles={{ backgroundColor: "white" }}
           containerStyles={styles.input}
-        />
+        /> */}
       </div>
       <TouchableDiv style={styles.footer}>
         <Link to="signup" style={styles.link}>
@@ -98,6 +86,12 @@ const styles: StyleSheetCSS = {
   },
   link: {
     textDecoration: "none",
+  },
+  errors: {
+    marginTop: 8,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 };
 

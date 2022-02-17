@@ -55,6 +55,15 @@ const MakeBracketRoute: React.FC<{}> = () => {
   const enterPressed = useKeyPress("Enter");
 
   const makeBracket = () => {
+    if (useElo) {
+      teams.sort((a, b) =>
+        a.content.elo! < b.content.elo!
+          ? -1
+          : a.content.elo! > b.content.elo!
+          ? 1
+          : 0
+      );
+    }
     const tree = convertListToTree(convertTeamItemsToTeams(teams));
     dispatch(createBracket("0", serializeTree(tree)));
     navigation.push("/view/0");

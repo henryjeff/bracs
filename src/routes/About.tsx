@@ -90,10 +90,10 @@ const About: React.FC<{}> = () => {
           <Member name="Henry Heffernan" role="Frontend and Team Lead" />
         </AnimatedMountView>
         <AnimatedMountView delay={0.2} mountInitialOffset={32}>
-          <Member name="Trey Breccetti" role="Backend Lead" />
+          <Member name="Trey Briccetti" role="Backend Lead" />
         </AnimatedMountView>
         <AnimatedMountView delay={0.3} mountInitialOffset={32}>
-          <Member name="Jon Wong" role="Dev Ops and AWS Lead" />
+          <Member name="Nick Lennox" role="Backend Developer" />
         </AnimatedMountView>
       </div>
       <AnimatedMountView delay={0.3} duration={0.8} styles={{ margin: 32 }}>
