@@ -40,15 +40,15 @@ export const convertListToTree = (teams: Team[]): BracketTree<Team> => {
 };
 
 const generateSeedPlacement = (depth: number): number[][] => {
-  //base case
+  // Base case
   if (depth === 1) {
     let a = [[0], [1]];
     return a;
   } else {
-    //recurse to get previous depth seeding directions list
+    // Recurse to get previous depth seeding directions list
     let minusDepthList = generateSeedPlacement(depth - 1);
 
-    //create new list with copies of previous depth
+    // Create new list with copies of previous depth
     let newList: number[][] = [];
     minusDepthList.forEach((elem) => {
       newList.push([...elem]);
@@ -325,14 +325,14 @@ export function declareMatchWinner(
   const values = bracket.values;
   const team = values[teamId];
   if (!team || !team.parentId) return;
-  
-  const parent = values[team.parentId];
-  const sisterTeam = values[parent.leftId === teamId ? parent.rightId! : parent.leftId!]
-  if(team.value && team.value?.elo && sisterTeam.value?.elo) {
-    const newElo = playGame(team.value.elo, sisterTeam.value.elo, true)
-    team.value.elo = newElo[0]
-    sisterTeam.value.elo = newElo[1]
 
+  const parent = values[team.parentId];
+  const sisterTeam =
+    values[parent.leftId === teamId ? parent.rightId! : parent.leftId!];
+  if (team.value && team.value?.elo && sisterTeam.value?.elo) {
+    const newElo = playGame(team.value.elo, sisterTeam.value.elo, true);
+    team.value.elo = newElo[0];
+    sisterTeam.value.elo = newElo[1];
   }
   values[team.parentId] = {
     ...parent,
