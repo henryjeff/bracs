@@ -1,10 +1,12 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import colors from "../../constants/Colors";
-import { Button, Text } from "../general";
+import { Button, Icon, Text, TouchableDiv } from "../general";
 import { motion } from "framer-motion";
 import { Easing } from "../../constants/Animation";
 import useHover from "../../hooks/useHover";
+import { useCurrUser, useTokenData } from "../../store/selectors";
+import useLogout from "../../hooks/useLogout";
 interface NavigationOptionProps {
   to: string;
   text?: string;
@@ -122,6 +124,10 @@ const Logo: React.FC<{}> = () => {
 };
 
 const TopNavigation: React.FC<{}> = () => {
+  const tokenData = useTokenData();
+  const user = useCurrUser();
+  const { logout } = useLogout();
+
   return (
     <div className="topNavigation" style={styles.container}>
       <div style={styles.sideNav}>
@@ -135,9 +141,21 @@ const TopNavigation: React.FC<{}> = () => {
         <NavigationOption to="/about" text="About" />
       </div>
       <div style={styles.sideNav}>
-        <NavigationOption to="/login">
-          <Button text="Login" />
-        </NavigationOption>
+        {tokenData?.accessToken && user ? (
+          <div style={styles.row}>
+            <Icon icon="user" size={16} style={styles.userIcon} />
+            <Text weight="medium" fontSize={16}>
+              {user.username}
+            </Text>
+            <TouchableDiv style={styles.logout} onPress={logout}>
+              <Icon size={18} icon="logout" />
+            </TouchableDiv>
+          </div>
+        ) : (
+          <NavigationOption to="/login">
+            <Button text="Login" />
+          </NavigationOption>
+        )}
       </div>
     </div>
   );
@@ -173,6 +191,7 @@ const styles: StyleSheetCSS = {
     flex: 1,
     justifyContent: "center",
     display: "flex",
+    // background: "red",
   },
   centerNav: {
     flex: 2,
@@ -186,6 +205,21 @@ const styles: StyleSheetCSS = {
     justifyContent: "center",
     height: 3,
     backgroundColor: colors.white,
+  },
+  row: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    // flexDirection: "column",
+  },
+  logout: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 20,
+  },
+  userIcon: {
+    marginRight: 8,
   },
 };
 
