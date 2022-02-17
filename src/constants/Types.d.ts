@@ -64,8 +64,8 @@ interface BracketNodeElement {
 }
 
 declare interface AuthTokenResponseDto {
-  access: string;
-  refresh: string;
+  token: string;
+  userID: number;
 }
 
 declare interface AuthTokenRefreshResponseDto {
@@ -78,6 +78,8 @@ declare interface UserCreateRequestDto {
 }
 
 declare interface UserResponseDto {
+  email: string;
   id: number;
+  phone: string;
   username: string;
 }
