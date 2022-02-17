@@ -17,6 +17,24 @@ input {
   background-color: none;
 }
 
+.bracket-container {
+  grid-area: "bracket";
+  height: calc(100vh - var(--header-height));
+}
+
+.bracket-page {
+  display: grid;
+  grid-template-areas: "controls bracket ";
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 3fr;
+}
+
+.bracket-controls {
+  min-width: 200px;
+  padding: 24px;
+  grid-area: "controls";
+}
+
 .wrapper {
   display: grid;
   /* Header and footer span the entire width, sidebars and content are fixed, with empty space on sides */
