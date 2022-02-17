@@ -3,6 +3,7 @@ import React from "react";
 import EditIcon from "./Edit.svg";
 import GoogleIcon from "./Google.svg";
 import GithubIcon from "./Github.svg";
+import LogoutIcon from "./Logout.svg";
 import UserIcon from "./User.svg";
 import MenuIcon from "./Menu.svg";
 import KeyIcon from "./Key.svg";
@@ -24,6 +25,7 @@ const icons = {
   phone: PhoneIcon,
   rating: RatingIcon,
   google: GoogleIcon,
+  logout: LogoutIcon,
   github: GithubIcon,
   eyeCross: EyeCrossIcon,
   circleAdd: CircleAddIcon,
