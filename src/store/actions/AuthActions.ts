@@ -1,19 +1,26 @@
-// import { AuthController } from "../../api/AuthController";
-// import { ActionType } from "../ActionTypes";
+import { AuthController } from "../../api/AuthController";
+import { ActionType } from "../ActionTypes";
 
-// export const authLogin =
-//   (email: string, password: string) =>
-//   (dispatch: (a: AuthLoginAction) => any, getState: () => RootState) => {
-//     return AuthController.login({ email, password }).then((tokenRes) => {
-//       dispatch({
-//         type: ActionType.LOG_IN,
-//         payload: {
-//           accessToken: tokenRes.access,
-//           refreshToken: tokenRes.refresh,
-//         },
-//       });
-//     });
-//   };
+export const authLogin =
+  (identifier: string, password: string) =>
+  (dispatch: (a: AuthLoginAction) => any, getState: () => RootState) => {
+    return new Promise((resolve, reject) => {
+      AuthController.login({ identifier, password })
+        .then((res) => {
+          dispatch({
+            type: ActionType.LOG_IN,
+            payload: {
+              userId: res.userID,
+              accessToken: res.token,
+            },
+          });
+          resolve(res);
+        })
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  };
 
 // export const authCreateUser =
 //   (user: UserCreateRequestDto) =>
@@ -27,10 +34,10 @@
 //       });
 //   };
 
-// export const authLogout =
-//   () => (dispatch: (a: AuthLogoutAction) => any, getState: () => RootState) => {
-//     return dispatch({ type: ActionType.LOG_OUT });
-//   };
+export const authLogout =
+  () => (dispatch: (a: AuthLogoutAction) => any, getState: () => RootState) => {
+    return dispatch({ type: ActionType.LOG_OUT });
+  };
 
 // export const authRefreshAccessToken =
 //   (refreshToken: string) =>
@@ -39,4 +46,4 @@
 //     // return dispatch({ type: ActionType.LOG_OUT, payload: {} });
 //   };
 
-export default {};
+// export default {;

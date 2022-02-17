@@ -5,5 +5,6 @@ export enum ActionType {
   LOG_IN = "LOG_IN",
   LOG_OUT = "LOG_OUT",
   REFRESH_TOKEN = "REFRESH_TOKEN",
+  SET_USER_ID = "SET_USER_ID",
   LOAD_USER = "LOAD_USER",
 }

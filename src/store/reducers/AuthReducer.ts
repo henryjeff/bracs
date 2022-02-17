@@ -3,7 +3,7 @@ import { ActionType } from "../ActionTypes";
 export function createInitialAuthState(): AuthState {
   return {
     tokenData: undefined,
-    userId: "",
+    userId: -1,
   };
 }
 
@@ -19,13 +19,14 @@ const AuthReducer = (
         ...state,
         tokenData: {
           accessToken: action.payload.accessToken,
-          refreshToken: action.payload.refreshToken,
         },
+        userId: action.payload.userId,
       };
     case ActionType.LOG_OUT:
       return {
         ...state,
         tokenData: undefined,
+        userId: -1,
       };
     default:
       return state;
