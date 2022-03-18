@@ -8,19 +8,17 @@ import AwsImage from "../assets/images/aws.png";
 import ReactImage from "../assets/images/react.png";
 import FlaskImage from "../assets/images/flask.png";
 import SqlImage from "../assets/images/sql.png";
-import { Link } from "react-router-dom";
-import { NONAME } from "dns";
 
 interface MemberProps {
   name: string;
   role: string;
-  github: string;
+  linkedInLink: string;
 }
 
-const Member: React.FC<MemberProps> = ({ name, role, github }) => {
+const Member: React.FC<MemberProps> = ({ name, role, linkedInLink }) => {
   const { isHovering, onHover, onLeave } = useHover();
   return (
-    <a style={styles.link} href={github} target={"_blank"} rel={"noopener noreferrer"}>
+    <a style={styles.link} href={linkedInLink} target={"_blank"} rel={"noopener noreferrer"}>
       <motion.div
         onMouseEnter={onHover}
         onMouseLeave={onLeave}
@@ -91,13 +89,13 @@ const About: React.FC<{}> = () => {
       </div>
       <div style={styles.members}>
         <AnimatedMountView delay={0.1} mountInitialOffset={32}>
-          <Member name="Henry Heffernan" role="Frontend and Team Lead" github="https://www.linkedin.com/in/henryheffernan/" />
+          <Member name="Henry Heffernan" role="Frontend and Team Lead" linkedInLink="https://www.linkedin.com/in/henryheffernan/" />
         </AnimatedMountView>
         <AnimatedMountView delay={0.2} mountInitialOffset={32}>
-          <Member name="Trey Briccetti" role="Backend Lead" github="https://www.linkedin.com/in/trey-briccetti/"/>
+          <Member name="Trey Briccetti" role="Backend Lead" linkedInLink="https://www.linkedin.com/in/trey-briccetti/"/>
         </AnimatedMountView>
         <AnimatedMountView delay={0.3} mountInitialOffset={32}>
-          <Member name="Nick Lennox" role="Backend Developer" github="https://www.linkedin.com/in/nicholas-lennox/"/>
+          <Member name="Nick Lennox" role="Backend Developer" linkedInLink="https://www.linkedin.com/in/nicholas-lennox/"/>
         </AnimatedMountView>
       </div>
       <AnimatedMountView delay={0.3} duration={0.8} styles={{ margin: 32 }}>
