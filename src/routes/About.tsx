@@ -12,56 +12,58 @@ import SqlImage from "../assets/images/sql.png";
 interface MemberProps {
   name: string;
   role: string;
+  linkedInLink: string;
 }
 
-const Member: React.FC<MemberProps> = ({ name, role }) => {
+const Member: React.FC<MemberProps> = ({ name, role, linkedInLink }) => {
   const { isHovering, onHover, onLeave } = useHover();
-
   return (
-    <motion.div
-      onMouseEnter={onHover}
-      onMouseLeave={onLeave}
-      initial={false}
-      animate={isHovering ? "hover" : "none"}
-      variants={memberVariants}
-      transition={{
-        duration: 0.8,
-        ease: Easing.expOut,
-      }}
-      style={styles.member}
-    >
-      <div
-        style={{
-          width: 8,
-          backgroundColor: colors.gray1,
-          flexShrink: 1,
-          height: 48,
-          marginRight: 12,
-          borderRadius: 8,
+    <a style={styles.link} href={linkedInLink} target={"_blank"} rel={"noopener noreferrer"}>
+      <motion.div
+        onMouseEnter={onHover}
+        onMouseLeave={onLeave}
+        initial={false}
+        animate={isHovering ? "hover" : "none"}
+        variants={memberVariants}
+        transition={{
+          duration: 0.8,
+          ease: Easing.expOut,
         }}
-      ></div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          width: "100%",
-          flexGrow: 1,
-        }}
+        style={styles.member}
       >
-        <Text textWrap weight="medium" fontSize={24}>
-          {name}
-        </Text>
-        <Text
-          textWrap
-          color={colors.gray1}
-          fontSize={16}
-          style={{ marginTop: 4 }}
+        <div
+          style={{
+            width: 8,
+            backgroundColor: colors.gray1,
+            flexShrink: 1,
+            height: 48,
+            marginRight: 12,
+            borderRadius: 8,
+          }}
+        ></div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            width: "100%",
+            flexGrow: 1,
+          }}
         >
-          {role}
-        </Text>
-      </div>
-    </motion.div>
+          <Text textWrap weight="medium" fontSize={24}>
+            {name}
+          </Text>
+          <Text
+            textWrap
+            color={colors.gray1}
+            fontSize={16}
+            style={{ marginTop: 4 }}
+          >
+            {role}
+          </Text>
+        </div>
+      </motion.div>
+    </a>
   );
 };
 
@@ -87,13 +89,13 @@ const About: React.FC<{}> = () => {
       </div>
       <div style={styles.members}>
         <AnimatedMountView delay={0.1} mountInitialOffset={32}>
-          <Member name="Henry Heffernan" role="Frontend and Team Lead" />
+          <Member name="Henry Heffernan" role="Frontend and Team Lead" linkedInLink="https://www.linkedin.com/in/henryheffernan/" />
         </AnimatedMountView>
         <AnimatedMountView delay={0.2} mountInitialOffset={32}>
-          <Member name="Trey Briccetti" role="Backend Lead" />
+          <Member name="Trey Briccetti" role="Backend Lead" linkedInLink="https://www.linkedin.com/in/trey-briccetti/"/>
         </AnimatedMountView>
         <AnimatedMountView delay={0.3} mountInitialOffset={32}>
-          <Member name="Nick Lennox" role="Backend Developer" />
+          <Member name="Nick Lennox" role="Backend Developer" linkedInLink="https://www.linkedin.com/in/nicholas-lennox/"/>
         </AnimatedMountView>
       </div>
       <AnimatedMountView delay={0.3} duration={0.8} styles={{ margin: 32 }}>
@@ -179,6 +181,9 @@ const styles: StyleSheetCSS = {
     minWidth: 212,
     borderRadius: 16,
     backgroundColor: colors.navy1,
+  },
+  link: {
+    textDecoration: "none",
   },
 };
 
