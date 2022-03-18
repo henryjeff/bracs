@@ -1,7 +1,13 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import colors from "../../constants/Colors";
-import { Button, Icon, Text, TouchableDiv } from "../general";
+import {
+  AnimatedMountView,
+  Button,
+  Icon,
+  Text,
+  TouchableDiv,
+} from "../general";
 import { motion } from "framer-motion";
 import { Easing } from "../../constants/Animation";
 import useHover from "../../hooks/useHover";
@@ -142,7 +148,7 @@ const TopNavigation: React.FC<{}> = () => {
       </div>
       <div style={styles.sideNav}>
         {tokenData?.accessToken && user ? (
-          <div style={styles.row}>
+          <AnimatedMountView mountDirection={"x"} styles={styles.row}>
             <Icon icon="user" size={16} style={styles.userIcon} />
             <Text weight="medium" fontSize={16}>
               {user.username}
@@ -150,7 +156,7 @@ const TopNavigation: React.FC<{}> = () => {
             <TouchableDiv style={styles.logout} onPress={logout}>
               <Icon size={18} icon="logout" />
             </TouchableDiv>
-          </div>
+          </AnimatedMountView>
         ) : (
           <NavigationOption to="/login">
             <Button text="Login" />

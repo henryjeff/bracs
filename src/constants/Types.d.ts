@@ -74,7 +74,13 @@ declare interface AuthTokenRefreshResponseDto {
 
 declare interface UserCreateRequestDto {
   username: string;
+  email: string;
+  phone?: string;
   password: string;
+}
+
+declare interface UserCreateResponseDto {
+  userID: number;
 }
 
 declare interface UserResponseDto {
