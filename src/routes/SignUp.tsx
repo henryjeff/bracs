@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthController } from "../api/AuthController";
 import {
   AnimatedMountView,
   Button,
@@ -8,9 +9,21 @@ import {
   TouchableDiv,
 } from "../components/general";
 import colors from "../constants/Colors";
+import useSignUp from "../hooks/useSignUp";
 
 const SignInRoute: React.FC<{}> = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const { isLoading, error, signUp } = useSignUp({
+    email,
+    username,
+    password,
+    phone,
+  });
+
   return (
     <AnimatedMountView styles={{ width: 320, marginTop: 64 }}>
       <Text weight="medium" fontSize={24} style={styles.header}>
@@ -20,38 +33,41 @@ const SignInRoute: React.FC<{}> = () => {
         iconSize={12}
         icon="user"
         placeholderText="Name"
-        onChangeText={() => {}}
+        onChangeText={setUsername}
         containerStyles={styles.input}
       />
       <TextInput
         iconSize={12}
         icon="mail"
         placeholderText="Email"
-        onChangeText={() => {}}
+        onChangeText={setEmail}
         containerStyles={styles.input}
       />
       <TextInput
         iconSize={12}
         icon="phone"
         placeholderText="Phone Number"
-        onChangeText={() => {}}
+        onChangeText={setPhone}
         containerStyles={styles.input}
       />
       <TextInput
         icon="key"
         inputType="password"
         placeholderText="Password"
-        onChangeText={() => {}}
+        onChangeText={setPassword}
         showContentToggle
         containerStyles={styles.input}
       />
       <div style={styles.buttons}>
-        <Button
-          isLoading={isLoading}
-          text="Sign Up"
-          onClick={() => setIsLoading(true)}
-        />
-        <div style={styles.spacer} />
+        <Button isLoading={isLoading} text="Sign Up" onClick={signUp} />
+        {error && (
+          <AnimatedMountView styles={styles.errors}>
+            <Text color={colors.red} fontSize={14} style={styles.error}>
+              {error}
+            </Text>
+          </AnimatedMountView>
+        )}
+        {/* <div style={styles.spacer} />
         <Button
           iconSize={18}
           icon="google"
@@ -59,7 +75,7 @@ const SignInRoute: React.FC<{}> = () => {
           buttonTextProps={{ color: colors.navy1 }}
           buttonStyles={{ backgroundColor: "white" }}
           containerStyles={styles.input}
-        />
+        /> */}
       </div>
       <TouchableDiv style={styles.footer}>
         <Link to="login" style={styles.link}>
@@ -92,6 +108,12 @@ const styles: StyleSheetCSS = {
   },
   link: {
     textDecoration: "none",
+  },
+  errors: {
+    marginTop: 8,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 };
 
