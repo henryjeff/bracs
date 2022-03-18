@@ -4,26 +4,25 @@ export class AuthController {
   /**
    * Create user
    */
-  // static create(
-  //   params: {
-  //     resource: UserCreateRequestDto;
-  //   } = {} as any,
-  //   options: IRequestOptions = {}
-  // ): Promise<UserResponseDto> {
-  //   return new Promise((resolve, reject) => {
-  //     const url = "auth/new_user";
-  //     const configs: IRequestConfig = getConfigs(
-  //       "post",
-  //       "application/json",
-  //       url,
-  //       options
-  //     );
-  //     const data = params.resource;
-  //     configs.data = data;
-  //     console.log(configs);
-  //     axios(configs, resolve, reject);
-  //   });
-  // }
+  static create(
+    params: {
+      resource: UserCreateRequestDto;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<UserResponseDto> {
+    return new Promise((resolve, reject) => {
+      const url = "post_user";
+      const configs: IRequestConfig = getConfigs(
+        "post",
+        "application/json",
+        url,
+        options
+      );
+      const data = params.resource;
+      configs.data = data;
+      axios(configs, resolve, reject);
+    });
+  }
   // /**
   //  * Login user to get our tokens
   //  */
