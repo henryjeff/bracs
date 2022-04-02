@@ -3,18 +3,22 @@ import { getConfigs, axios, IRequestOptions, IRequestConfig } from "./";
 export class UserController {
   static getUser(
     params: {
-      userId: number;
+      userID: number;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<UserResponseDto> {
+  ): Promise<UserGetResponseDto> {
     return new Promise((resolve, reject) => {
-      const url = `user/${params.userId}`;
+      const url = 'user';
       const configs: IRequestConfig = getConfigs(
-        "get",
+        "post",
         "application/json",
         url,
         options
       );
+      const data = {
+        userID: params.userID,
+      }
+      configs.data = data;
       axios(configs, resolve, reject);
     });
   }

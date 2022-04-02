@@ -81,5 +81,5 @@ declare type UserStateAction = UserLoadAction;
 
 declare interface UserLoadAction {
   type: typeof import("./ActionTypes").ActionType.LOAD_USER;
-  payload: { userId: number; user: UserResponseDto };
+  payload: { userID: number; user: UserResponseDto };
 }

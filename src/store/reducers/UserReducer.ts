@@ -18,7 +18,7 @@ const UserReducer = (
         ...state,
         users: {
           ...state.users,
-          [action.payload.userId]: action.payload.user,
+          [action.payload.userID]: action.payload.user,
         },
       };
     default:
