@@ -9,7 +9,7 @@ export class AuthController {
       resource: UserCreateRequestDto;
     } = {} as any,
     options: IRequestOptions = {}
-  ): Promise<UserResponseDto> {
+  ): Promise<UserGetResponseDto> {
     return new Promise((resolve, reject) => {
       const url = "post_user";
       const configs: IRequestConfig = getConfigs(
@@ -50,29 +50,29 @@ export class AuthController {
     });
   }
 
-  static getUser(
-    params: {
-      identifier: string;
-      password: string;
-    } = {} as any,
-    options: IRequestOptions = {}
-  ): Promise<AuthTokenResponseDto> {
-    return new Promise((resolve, reject) => {
-      const url = "login";
-      const configs: IRequestConfig = getConfigs(
-        "post",
-        "application/json",
-        url,
-        options
-      );
-      const data = {
-        identifier: params.identifier,
-        password: params.password,
-      };
-      configs.data = data;
-      axios(configs, resolve, reject);
-    });
-  }
+  // static getUser(
+  //   params: {
+  //     identifier: string;
+  //     password: string;
+  //   } = {} as any,
+  //   options: IRequestOptions = {}
+  // ): Promise<AuthTokenResponseDto> {
+  //   return new Promise((resolve, reject) => {
+  //     const url = "login";
+  //     const configs: IRequestConfig = getConfigs(
+  //       "post",
+  //       "application/json",
+  //       url,
+  //       options
+  //     );
+  //     const data = {
+  //       identifier: params.identifier,
+  //       password: params.password,
+  //     };
+  //     configs.data = data;
+  //     axios(configs, resolve, reject);
+  //   });
+  // }
   // /**
   //  * Refresh our token
   //  */

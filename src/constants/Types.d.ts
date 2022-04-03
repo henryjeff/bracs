@@ -83,9 +83,41 @@ declare interface UserCreateResponseDto {
   userID: number;
 }
 
-declare interface UserResponseDto {
+declare interface UserGetRequestDto {
+  userID: number;
+}
+
+declare interface UserGetResponseDto {
   email: string;
   id: number;
   phone: string;
   username: string;
 }
+
+declare interface BracketCreateRequestDto {
+  bracketData: JSON;
+}
+
+declare interface BracketCreateResponseDto {
+  bracketID: number;
+}
+
+declare interface BracketGetListRequestDto {
+  userID: number;
+}
+
+declare interface BracketGetListResponseDto {
+  bracketIDs: number[];
+}
+
+declare interface BracketGetRequestDto {
+  bracketID: number;
+}
+
+declare interface BracketGetResponseDto {
+  bracketData: JSON;
+  id: number;
+  name: string;
+  ownerID: number;
+}
+
