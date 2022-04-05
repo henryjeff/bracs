@@ -31,7 +31,7 @@ export class BracketController {
         options: IRequestOptions = {}
     ): Promise<BracketGetListResponseDto> {
         return new Promise((resolve, reject) => {
-        const url = "get_user_brackets";
+        const url = `get_user_brackets/${params.userID}`;
         const configs: IRequestConfig = getConfigs(
             "get",
             "application/json",
@@ -53,17 +53,13 @@ export class BracketController {
         options: IRequestOptions = {}
     ): Promise<BracketGetResponseDto> {
         return new Promise((resolve, reject) => {
-        const url = "bracket";
+        const url = `bracket/${params.bracketID}`;
         const configs: IRequestConfig = getConfigs(
             "get",
             "application/json",
             url,
             options
         );
-        const data = {
-            bracketID: params.bracketID,
-        };
-        configs.data = data;
         axios(configs, resolve, reject);
         });
     }
