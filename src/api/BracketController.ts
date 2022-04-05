@@ -38,10 +38,6 @@ export class BracketController {
             url,
             options
         );
-        const data = {
-            userID: params.userID,
-        };
-        configs.data = data;
         axios(configs, resolve, reject);
         });
     }
