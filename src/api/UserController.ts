@@ -15,7 +15,6 @@ export class UserController {
         url,
         options
       );
-      console.log(configs);
       axios(configs, resolve, reject);
     });
   }
