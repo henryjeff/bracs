@@ -79,7 +79,7 @@ const MakeBracketRoute: React.FC<{}> = () => {
   const addTeam = useCallback(() => {
     if (newTeam.length > 0 && !newTeamExists()) {
       teams.push({
-        id: `${teams.length}`,
+        id: `${newTeam}`,
         content: {
           name: newTeam,
           color: generateRandomColor(),
