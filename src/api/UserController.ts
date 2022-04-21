@@ -8,17 +8,13 @@ export class UserController {
     options: IRequestOptions = {}
   ): Promise<UserGetResponseDto> {
     return new Promise((resolve, reject) => {
-      const url = 'user';
+      const url = `user/${params.userID}`;
       const configs: IRequestConfig = getConfigs(
-        "post",
+        "get",
         "application/json",
         url,
         options
       );
-      const data = {
-        userID: params.userID,
-      }
-      configs.data = data;
       axios(configs, resolve, reject);
     });
   }
