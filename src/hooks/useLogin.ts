@@ -26,11 +26,12 @@ export default function useLogin({
             console.log(userRes);
           })
           .catch((e: any) => {
-            setError(e.data.error);
+            // console.log(e);
+            setError("Error logging in");
           });
       })
       .catch((e: any) => {
-        setError(e.data.error);
+        setError("Error logging in");
       })
       .finally(() => {
         setIsLoading(false);

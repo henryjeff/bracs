@@ -102,6 +102,10 @@ declare interface BracketCreateResponseDto {
   bracketID: number;
 }
 
+declare interface BracketUpdateResponseDto {
+  // bracketID: number;
+}
+
 declare interface BracketGetListRequestDto {
   userID: number;
 }
@@ -120,4 +124,3 @@ declare interface BracketGetResponseDto {
   name: string;
   ownerID: number;
 }
-
