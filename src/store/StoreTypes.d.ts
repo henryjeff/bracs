@@ -50,12 +50,29 @@ declare type BracketState = {
       bracket: SerializedBracket<Team>;
     };
   };
+  userBrackets: {
+    [userId: string]: number[];
+  };
 };
 
 declare type BracketStateAction =
+  | BracketGetAction
+  | GetUsersBracketsAction
   | BracketCreateAction
   | BracketDeclareMatchWinner;
 
+declare interface GetUsersBracketsAction {
+  type: typeof import("./ActionTypes").ActionType.GET_USER_BRACKETS;
+  payload: {
+    bracketIds: number[];
+    userId: number;
+  };
+}
+
+declare interface BracketGetAction {
+  type: typeof import("./ActionTypes").ActionType.GET_BRACKET;
+  payload: { id: string; tree: SerializedBracket<Team> };
+}
 declare interface BracketCreateAction {
   type: typeof import("./ActionTypes").ActionType.CREATE_BRACKET;
   payload: { id: string; tree: SerializedBracket<Team> };

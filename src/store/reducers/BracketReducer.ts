@@ -4,6 +4,7 @@ import { declareMatchWinner } from "../../components/bracket/Tree";
 export function createInitialBracketState(): BracketState {
   return {
     brackets: {},
+    userBrackets: {},
   };
 }
 
@@ -38,6 +39,27 @@ const BracketReducer = (
           },
         },
       };
+    case ActionType.GET_BRACKET:
+      const { id, tree } = action.payload;
+      return {
+        ...state,
+        brackets: {
+          ...state.brackets,
+          [id]: {
+            bracket: tree,
+          },
+        },
+      };
+    case ActionType.GET_USER_BRACKETS:
+      const { userId, bracketIds } = action.payload;
+      return {
+        ...state,
+        userBrackets: {
+          ...state.userBrackets,
+          [userId]: bracketIds,
+        },
+      };
+
     default:
       return state;
   }

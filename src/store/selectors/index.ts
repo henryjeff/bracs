@@ -5,6 +5,10 @@ export function useBracketSelector(bracketId: string) {
   return useSelector((s: RootState) => s.bracket.brackets[bracketId]);
 }
 
+export function useUserBracketsSelector(userId: number) {
+  return useSelector((s: RootState) => s.bracket.userBrackets[userId]);
+}
+
 export const useUserId = () => {
   return useSelector((s: RootState) => s.auth.userId, _.isEqual);
 };

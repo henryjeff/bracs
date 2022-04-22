@@ -5,6 +5,7 @@ export const getUser =
   (userID: number) =>
   (dispatch: (a: UserLoadAction) => any, getState: () => RootState) => {
     return new Promise((resolve, reject) => {
+      console.log()
       UserController.getUser({ userID })
         .then((res) => {
           dispatch({
