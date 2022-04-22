@@ -17,6 +17,7 @@ import { createBracket } from "../store/actions/BracketActions";
 import useKeyPress from "../hooks/useKeyPress";
 import colors from "../constants/Colors";
 import { useHistory } from "react-router";
+import { useCurrUser, useTokenData } from "../store/selectors";
 
 type TeamItem = {
   id: string;
@@ -46,6 +47,7 @@ const MakeBracketRoute: React.FC<{}> = () => {
   const lastDefaultRating = usePrevious(defaultRating);
   const dispatch = useDispatch();
   const navigation = useHistory();
+  const user = useCurrUser();
 
   const inputRef = createRef<HTMLElement>();
   const [, updateState] = useState({});
@@ -65,8 +67,12 @@ const MakeBracketRoute: React.FC<{}> = () => {
       );
     }
     const tree = convertListToTree(convertTeamItemsToTeams(teams));
-    dispatch(createBracket("0", serializeTree(tree)));
-    navigation.push("/view/0");
+    let isLoggedIn = user ? true : false;
+    dispatch(createBracket(serializeTree(tree), isLoggedIn))
+      //@ts-ignore
+      .then((bracketId) => {
+        navigation.push(`/view/${bracketId}`);
+      });
   };
 
   const newTeamExists = useCallback(() => {
