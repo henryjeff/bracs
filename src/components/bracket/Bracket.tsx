@@ -5,14 +5,18 @@ import ReactFlow, {
   useStore,
 } from "react-flow-renderer";
 import { useCallback, useState, useRef, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import useLayout from "../../hooks/useLayout";
 import TeamNode from "./nodes/TeamNode";
 import InProgressNode from "./nodes/InProgressNode";
 import TbdNode from "./nodes/TbdNode";
 import ByeNode from "./nodes/ByeNode";
-import BracketControls from "./BracketControls";
 import { convertSerializedTreeToElements } from "./Tree";
-import { useBracketSelector } from "../../store/selectors";
+import { useBracketSelector, useCurrUser } from "../../store/selectors";
+import { updateBracket } from "../../store/actions/BracketActions";
+import { Text } from "../general";
+import colors from "../../constants/Colors";
+import _ from "lodash";
 export interface BracketProps {
   bracketId: string;
 }
@@ -20,8 +24,11 @@ export interface BracketProps {
 const Bracket: React.FC<BracketProps> = ({ bracketId }) => {
   const [rfInstance, setRfInstance] = useState<any>();
   const [elements, setElements] = useState<Elements<any>>();
-
+  const [error, setError] = useState("");
+  const [lastBracket, setLastBracket] = useState<SerializedBracket<Team>>();
+  const user = useCurrUser();
   const bracket = useBracketSelector(bracketId);
+  const dispatch = useDispatch();
 
   const onLoad = useCallback(
     (instance) => {
@@ -33,7 +40,6 @@ const Bracket: React.FC<BracketProps> = ({ bracketId }) => {
   const ref = useRef(null);
   const dimensions = useLayout(ref);
   const { setCenter } = useZoomPanHelper();
-  const store = useStore();
 
   // const cum = (i: number) => {
   //   const { nodes } = store.getState();
@@ -82,11 +88,23 @@ const Bracket: React.FC<BracketProps> = ({ bracketId }) => {
 
   useEffect(() => {
     if (bracket) {
-      const e = convertSerializedTreeToElements(bracket.bracket);
-      // console.log(e);
-      setElements(e);
+      if (bracket.bracket) {
+        if (bracket.bracket.root && bracket.bracket.values) {
+          if (user) {
+            dispatch(updateBracket(bracket.bracket, bracketId));
+          }
+
+          const e = convertSerializedTreeToElements(bracket.bracket, bracketId);
+          setElements(e);
+        } else {
+          setError("Bracket in invalid format");
+        }
+      } else {
+        setError("Bracket not found");
+      }
     }
-  }, [bracket]);
+    setLastBracket(bracket.bracket);
+  }, [bracket, bracketId]);
 
   return (
     <div ref={ref} style={styles.container}>
@@ -101,6 +119,16 @@ const Bracket: React.FC<BracketProps> = ({ bracketId }) => {
           nodeTypes={BracketNodeTypes}
         />
       )}
+      {error !== "" && (
+        <div style={styles.errorContainer}>
+          <Text weight="medium" fontSize={32}>
+            Error
+          </Text>
+          <Text weight="medium" style={styles.errorText} color={colors.gray1}>
+            {error}
+          </Text>
+        </div>
+      )}
     </div>
   );
 };
@@ -109,6 +137,17 @@ const styles: StyleSheetCSS = {
   container: {
     width: "100%",
     height: "100%",
+  },
+  errorContainer: {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+  },
+  errorText: {
+    marginTop: 10,
   },
 };
 
