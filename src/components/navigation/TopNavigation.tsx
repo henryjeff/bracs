@@ -145,6 +145,9 @@ const TopNavigation: React.FC<{}> = () => {
         <NavigationOption to="/" text="Home" />
         <NavigationOption to="/make" text="Make" />
         <NavigationOption to="/about" text="About" />
+        {tokenData?.accessToken && user ? (
+          <NavigationOption to="/brackets" text="Brackets" />
+        ) : null}
       </div>
       <div style={styles.sideNav}>
         {tokenData?.accessToken && user ? (
