@@ -239,7 +239,10 @@ function* bfs<T>(root: BracketTreeNode<T>) {
   }
 }
 
-export function convertSerializedTreeToElements(tree: SerializedBracket<Team>) {
+export function convertSerializedTreeToElements(
+  tree: SerializedBracket<Team>,
+  bracketId: string
+) {
   const elements: Elements<any> = [];
 
   for (const id in Object.keys(tree.values)) {
@@ -256,7 +259,7 @@ export function convertSerializedTreeToElements(tree: SerializedBracket<Team>) {
             data: {
               team,
               bracketData: {
-                bracketId: "0",
+                bracketId: bracketId,
                 nodeId: node.id,
               },
               intractable: node.parentId

@@ -46,6 +46,10 @@ export function axios(
       configs.headers.Authorization = `Bearer ${tokenData.accessToken}`;
     }
 
+    // add withCredentials to axios configs
+    //@ts-ignore
+    configs.withCredentials = true;
+
     return serviceOptions.axios
       .request(configs)
       .then((res: any) => {
@@ -72,6 +76,7 @@ export function axios(
         //   }
         // }
         console.log(err);
+        console.log(err.data);
         reject(err.response);
       });
   } else {
