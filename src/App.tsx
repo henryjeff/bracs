@@ -15,6 +15,7 @@ import HomeRoute from "./routes/Home";
 import AboutRoute from "./routes/About";
 import SignInRoute from "./routes/SignIn";
 import SignUpRoute from "./routes/SignUp";
+import BracketsRoute from "./routes/BracketsRoute";
 import NotFoundRoute from "./routes/NotFound";
 import ButtonPartyRoute from "./routes/Secret";
 
@@ -51,6 +52,7 @@ function Routes() {
         <AnonymousRoute exact path="/signup" component={SignUpRoute} />
         <Route exact path="/" component={HomeRoute} />
         <Route exact path="/about" component={AboutRoute} />
+        <PrivateRoute exact path="/brackets" component={BracketsRoute} />
         <Route exact path="/view/:bracketId" component={BracketRoute} />
         <Route exact path="/make" component={MakeBracketRoute} />
         <Route exact path="/buttonparty" component={ButtonPartyRoute} />
