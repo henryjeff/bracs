@@ -90,12 +90,13 @@ const Bracket: React.FC<BracketProps> = ({ bracketId }) => {
     if (bracket) {
       if (bracket.bracket) {
         if (bracket.bracket.root && bracket.bracket.values) {
-          if (user) {
-            dispatch(updateBracket(bracket.bracket, bracketId));
-          }
+          // if (user) {
+          //   dispatch(updateBracket(bracket.bracket, bracketId));
+          // }
 
           const e = convertSerializedTreeToElements(bracket.bracket, bracketId);
           setElements(e);
+          setLastBracket(bracket.bracket);
         } else {
           setError("Bracket in invalid format");
         }
@@ -103,7 +104,6 @@ const Bracket: React.FC<BracketProps> = ({ bracketId }) => {
         setError("Bracket not found");
       }
     }
-    setLastBracket(bracket.bracket);
   }, [bracket, bracketId]);
 
   return (
