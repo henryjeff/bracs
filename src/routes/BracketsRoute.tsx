@@ -42,10 +42,12 @@ const BracketRoute: React.FC<{}> = () => {
   const [sortBy, setSortBy] = useState("recent");
 
   useEffect(() => {
-    if (brackets.length > 0) {
-      const new_b = Array.from(brackets);
-      new_b.reverse();
-      setBracketIds(new_b);
+    if (brackets) {
+      if (brackets.length > 0) {
+        const new_b = Array.from(brackets);
+        new_b.reverse();
+        setBracketIds(new_b);
+      }
     }
   }, [brackets]);
 
@@ -53,8 +55,10 @@ const BracketRoute: React.FC<{}> = () => {
     console.log(sortBy);
     if (sortBy === "recent") {
       const new_b = Array.from(brackets);
-      new_b.reverse();
-      setBracketIds(new_b);
+      if (new_b) {
+        new_b.reverse();
+        setBracketIds(new_b);
+      }
     }
     if (sortBy === "oldest") {
       setBracketIds(brackets);
