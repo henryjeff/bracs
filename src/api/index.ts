@@ -4,7 +4,7 @@ import { convertSerializedTreeToElements } from "../components/bracket/Tree";
 // import { authRefreshAccessToken } from "../store/actions/AuthActions";
 import { store } from "../store";
 
-const basePath = "https://api.penis.beer/api/";
+const basePath = "https://api.bracs.co/api/";
 
 export interface IRequestOptions {
   headers?: any;
