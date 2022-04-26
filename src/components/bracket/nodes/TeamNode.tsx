@@ -4,7 +4,10 @@ import { useDispatch } from "react-redux";
 import colors from "../../../constants/Colors";
 import useHover from "../../../hooks/useHover";
 import { useCallback } from "react";
-import { declareMatchWinner } from "../../../store/actions/BracketActions";
+import {
+  declareMatchWinner,
+  updateBracket,
+} from "../../../store/actions/BracketActions";
 export interface TeamNodeProps {
   data: {
     team: Team;
@@ -23,6 +26,7 @@ const TeamNode: React.FC<TeamNodeProps> = ({ data }) => {
     dispatch(
       declareMatchWinner(data.bracketData.nodeId, data.bracketData.bracketId)
     );
+    dispatch(updateBracket(data.bracketData.bracketId));
   }, [data.bracketData, dispatch]);
 
   const { isHovering, onHover, onLeave } = useHover();

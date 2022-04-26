@@ -1,50 +1,39 @@
-// import ReactFlow, { Elements } from "react-flow-renderer";
-// import { useCallback, useState, useRef, useEffect } from "react";
-// import useLayout from "../../hooks/useLayout";
-// import TeamNode from "./nodes/TeamNode";
-// import InProgressNode from "./nodes/InProgressNode";
-// import TbdNode from "./nodes/TbdNode";
-// import ByeNode from "./nodes/ByeNode";
-// import { convertSerializedTreeToElements } from "./Tree";
-
-import { brotliDecompress } from "zlib";
 import colors from "../../constants/Colors";
 import { Button, Icon, Text } from "../general";
 
-// import { useBracketSelector } from "../../store/selectors";
+import { useBracketSelector, useBracketUpdated } from "../../store/selectors";
+import { useEffect, useState } from "react";
+import { isValidBracket } from "../../util/isValidBracket";
 export interface BracketProps {
   bracketId: string;
 }
 
 const BracketControls: React.FC<BracketProps> = ({ bracketId }) => {
-  //   const [rfInstance, setRfInstance] = useState();
-  //   const [elements, setElements] = useState<Elements<any>>();
+  const [totalGames, setTotalGames] = useState(0);
+  const [gamesPlayed, setGamesPlayed] = useState(0);
 
-  //   const bracket = useBracketSelector(bracketId);
+  const bracket = useBracketSelector(bracketId);
+  const bracketUpdated = useBracketUpdated(bracketId);
 
-  //   const onLoad = useCallback((instance) => {
-  //     instance.fitView();
-  //     setRfInstance(instance);
-  //   }, []);
+  // console.log(bracket);
+  useEffect(() => {
+    if (isValidBracket(bracket)) {
+      // calculate how many games have been played
+      let numUnplayed = 0;
+      const totalGames = Math.floor(Object.keys(bracket.values).length / 2);
+      for (let i = 0; i < Object.keys(bracket.values).length; i++) {
+        if (
+          bracket.values[i].type === "tbd" ||
+          bracket.values[i].type === "inProgress"
+        ) {
+          numUnplayed++;
+        }
+      }
 
-  //   const ref = useRef(null);
-  //   const dimensions = useLayout(ref);
-
-  //   useEffect(() => {
-  //     if (rfInstance) {
-  //       //@ts-ignore
-  //       rfInstance.fitView();
-  //     }
-  //   }, [dimensions, rfInstance]);
-
-  //   useEffect(() => {
-  //     if (bracket) {
-  //       const e = convertSerializedTreeToElements(bracket.bracket);
-  //       setElements(e);
-  //     }
-  //   }, [bracket]);
-
-  //   useEffect(() => {}, [elements]);
+      setGamesPlayed(totalGames - numUnplayed);
+      setTotalGames(totalGames);
+    }
+  }, [bracketUpdated, bracket]);
 
   return (
     <div className="bracket-controls" style={styles.container}>
@@ -64,10 +53,25 @@ const BracketControls: React.FC<BracketProps> = ({ bracketId }) => {
               <Icon icon="user" size={12} style={styles.icon} />
             </div>
           </div>
-          <div style={styles.bracketInfoRow}>
-            <Text>Progress</Text>
-            <Text color={colors.gray1}> 2/5 Games Played</Text>
-          </div>
+          {gamesPlayed === totalGames && bracket ? (
+            <div style={styles.bracketInfoRow}>
+              <Text>Bracket Complete</Text>
+              <Text color={colors.gray1}>
+                {bracket
+                  ? (bracket.values[bracket.root] || { value: { name: "" } })
+                      .value?.name
+                  : ""}{" "}
+                won!
+              </Text>
+            </div>
+          ) : (
+            <div style={styles.bracketInfoRow}>
+              <Text>Progress</Text>
+              <Text color={colors.gray1}>
+                {gamesPlayed}/{totalGames} Games Played
+              </Text>
+            </div>
+          )}
         </div>
       </div>
     </div>

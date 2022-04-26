@@ -37,7 +37,7 @@ export function axios(
   reject: (p: any) => void
 ): Promise<any> {
   if (serviceOptions.axios) {
-    console.log("Processing Request");
+    // console.log("Processing Request");
     const {
       auth: { tokenData },
     } = (<unknown>store.getState()) as RootState;
@@ -53,7 +53,7 @@ export function axios(
     return serviceOptions.axios
       .request(configs)
       .then((res: any) => {
-        console.log(res);
+        // console.log(res);
         resolve(res.data);
       })
       .catch((err: any) => {

@@ -48,6 +48,7 @@ declare type BracketState = {
   brackets: {
     [bracketId: string]: {
       bracket: SerializedBracket<Team>;
+      updated: number;
     };
   };
   userBrackets: {

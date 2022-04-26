@@ -14,6 +14,7 @@ const BracketReducer = (
   state = initialState,
   action: BracketStateAction
 ): BracketState => {
+  console.log("BracketReducer: ", action);
   switch (action.type) {
     case ActionType.CREATE_BRACKET:
       return {
@@ -21,6 +22,7 @@ const BracketReducer = (
         brackets: {
           ...state.brackets,
           [action.payload.id]: {
+            updated: Date.now(),
             bracket: action.payload.tree,
           },
         },
@@ -35,6 +37,7 @@ const BracketReducer = (
         brackets: {
           ...state.brackets,
           [action.payload.bracketId]: {
+            updated: Date.now(),
             bracket: newBracket,
           },
         },
@@ -46,6 +49,7 @@ const BracketReducer = (
         brackets: {
           ...state.brackets,
           [id]: {
+            updated: Date.now(),
             bracket: tree,
           },
         },

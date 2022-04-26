@@ -26,7 +26,7 @@ export class BracketController {
   static updateBracket(
     params: {
       bracketID: number;
-      name: string;
+      name?: string;
       bracketData: JSON;
     } = {} as any,
     options: IRequestOptions = {}
@@ -39,11 +39,14 @@ export class BracketController {
         url,
         options
       );
-      const data = {
+      const data: any = {
         bracketID: params.bracketID,
-        name: params.name,
         bracketData: params.bracketData,
       };
+
+      if (params.name) {
+        data.name = params.name;
+      }
       configs.data = data;
       axios(configs, resolve, reject);
     });

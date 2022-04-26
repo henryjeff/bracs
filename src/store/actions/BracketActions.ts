@@ -38,12 +38,12 @@ export const createBracket =
   };
 
 export const updateBracket =
-  (tree: SerializedBracket<Team>, bracketId: string) =>
+  (bracketId: string) =>
   (dispatch: (a: BracketCreateAction) => any, getState: () => RootState) => {
     return new Promise((resolve, reject) => {
+      const tree = getState().bracket.brackets[bracketId].bracket;
       BracketController.updateBracket({
         bracketID: parseInt(bracketId),
-        name: "",
         bracketData: tree as unknown as JSON,
       })
         .then(() => {
@@ -103,7 +103,7 @@ export const declareMatchWinner =
     dispatch: (a: BracketDeclareMatchWinner) => any,
     getState: () => RootState
   ) => {
-    return dispatch({
+    dispatch({
       type: ActionType.DECLARE_MATCH_WINNER,
       payload: {
         teamId,

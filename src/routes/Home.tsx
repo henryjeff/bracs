@@ -1,7 +1,10 @@
 import { AnimatedMountView, Button, Text } from "../components/general";
 import colors from "../constants/Colors";
+import { useCurrUser } from "../store/selectors";
 
 const HomeRoute: React.FC<{}> = () => {
+  const user = useCurrUser();
+
   return (
     <div style={styles.page}>
       <div style={styles.header}>
@@ -45,7 +48,11 @@ const HomeRoute: React.FC<{}> = () => {
       </div>
       <AnimatedMountView delay={0.4} styles={styles.footer} duration={0.8}>
         <Button linkTo="/make" margin text="Make a Bracket" />
-        <Button linkTo="/login" margin text="Sign In" />
+        {user ? (
+          <Button linkTo="/brackets" margin text="View Brackets" />
+        ) : (
+          <Button linkTo="/login" margin text="Sign In" />
+        )}
       </AnimatedMountView>
     </div>
   );
